@@ -1,19 +1,41 @@
 <template>
   <v-card color="basil">
     <v-card-title class="text-center justify-center py-6">
-      <h1 class="font-weight-bold text-h2 basil--text">あ</h1>
+      金額を入力してください。
     </v-card-title>
 
     <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-      <v-tab v-for="item in items" :key="item">
-        {{ item }}
+      <v-tab v-for="item in items" :key="item.name">
+        {{ item.name }}
       </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in items" :key="item">
+      <v-tab-item v-for="item in items" :key="item.name">
         <v-card color="basil" flat>
-          <v-card-text>ほげ</v-card-text>
+          <v-card-text>
+            <v-row>
+              <v-col
+                v-for="(moneyInfo, mIndex) in timeMoneys[item.time]"
+                :key="moneyInfo.name + mIndex"
+                cols="12"
+              >
+                <number
+                  :tab="tab"
+                  @change-value="moneyInfo.money = $event"
+                ></number>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+        <v-card>
+          <v-card-text>
+            <v-row>
+              <v-col>
+                <h1>{{ item.name }}の合計金額{{ total(item.time) }}円</h1>
+              </v-col>
+            </v-row>
+          </v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
@@ -21,13 +43,36 @@
 </template>
 
 <script>
+import { times, timeCount, getComma, timePattern } from '../components/Times'
+import Number from '../components/Number.vue'
 export default {
+  components: {
+    Number,
+  },
   data() {
+    const items = times()
+    const timeMoneys = {}
+    items.forEach((item) => {
+      timeMoneys[item.time] = []
+      for (var i = 0; i < 10; i++) {
+        timeMoneys[item.time].push({ name: '', money: 0 })
+      }
+    })
     return {
       tab: null,
-      items: ['Appetizers', 'Entrees', 'Deserts', 'Cocktails'],
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      items,
+      timeMoneys,
     }
+  },
+  computed: {},
+  methods: {
+    total(value) {
+      let result = 0
+      this.timeMoneys[value].forEach((item) => {
+        result += item.money
+      })
+      return getComma(result)
+    },
   },
 }
 </script>
