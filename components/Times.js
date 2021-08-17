@@ -9,6 +9,7 @@ items.push(new TimeLine('平日', 0))
 items.push(new TimeLine('休日', 1))
 items.push(new TimeLine('収入', 2))
 items.push(new TimeLine('固定費', 3))
+items.push(new TimeLine('集計', 4))
 
 //const timePattern = [1, 7, 30, 180, 365]
 const timePattern = []

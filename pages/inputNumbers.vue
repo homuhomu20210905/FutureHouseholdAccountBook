@@ -12,31 +12,43 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="item in items" :key="item.name">
-        <v-card color="basil" flat>
-          <v-card-text>
-            <v-row>
-              <v-col
-                v-for="(moneyInfo, mIndex) in timeMoneys[item.time]"
-                :key="moneyInfo.name + mIndex"
-                cols="12"
-              >
-                <number
-                  :tab="tab"
-                  @change-value="moneyInfo.money = $event"
-                ></number>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-        <v-card>
-          <v-card-text>
-            <v-row>
-              <v-col>
-                <h1>{{ item.name }}の合計金額{{ total(item.time) }}円</h1>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+        <div v-if="item.time != 4">
+          <v-card flat>
+            <v-card-text>
+              <v-row>
+                <v-col
+                  v-for="(moneyInfo, mIndex) in timeMoneys[item.time]"
+                  :key="moneyInfo.name + mIndex"
+                  cols="12"
+                >
+                  <number
+                    :tab="tab"
+                    @change-value="moneyInfo.money = $event"
+                  ></number>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+          <v-card>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <h1>{{ item.name }}の合計金額{{ total(item.time) }}円</h1>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </div>
+        <div v-else>
+          <v-row>
+            <v-col v-for="totalItem in items" :key="totalItem.name" cols="12">
+              <h2>
+                {{ totalItem.name }}
+                <timely-money :moneys="timesCalc(totalItem.time)" />
+              </h2>
+            </v-col>
+          </v-row>
+        </div>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -45,9 +57,12 @@
 <script>
 import { times, timeCount, getComma, timePattern } from '../components/Times'
 import Number from '../components/Number.vue'
+import TimelyMoney from '../components/timelyMoney.vue'
+
 export default {
   components: {
     Number,
+    TimelyMoney,
   },
   data() {
     const items = times()
@@ -64,14 +79,43 @@ export default {
       timeMoneys,
     }
   },
-  computed: {},
+  computed: {
+    calc() {
+      return (value) => {
+        let result = 0
+        this.timeMoneys[value].forEach((item) => {
+          result += item.money
+        })
+        return result
+      }
+    },
+    timesCalc() {
+      return (tab) => {
+        if (this.tab != 4) {
+          return null
+        }
+        const list = this.items
+          .filter((item) => {
+            return item.time == tab
+          })
+          .map((item) => {
+            return this.timeCalcList(this.calc(item.time), item.time)
+          })
+        return list
+      }
+    },
+  },
   methods: {
     total(value) {
-      let result = 0
-      this.timeMoneys[value].forEach((item) => {
-        result += item.money
+      return getComma(this.calc(value))
+    },
+    timeCalcList(money, time) {
+      //TODO 遅いと思われるので改善が必要。
+      const list = timePattern.map((item) => {
+        console.log('timeCount:' + timeCount(time, item.time))
+        return getComma(Math.round(money * timeCount(time, item.time)))
       })
-      return getComma(result)
+      return list
     },
   },
 }
