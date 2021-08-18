@@ -1,15 +1,20 @@
-const TimeLine = (name, time) => {
+/**
+ * 明細用項目
+ * @param {*} name   名称
+ * @param {*} day    日数
+ * @param {*} cycle  周期
+ * @param {*} status ステータス(支出/収入)
+ *  @returns
+ */
+const TimeLine = (name, day, cycle, money, status) => {
   return {
     name,
-    time,
+    day,
+    cycle,
+    money,
+    status: status != 1 ? 0 : status,
   }
 }
-const items = []
-items.push(new TimeLine('平日', 0))
-items.push(new TimeLine('休日', 1))
-items.push(new TimeLine('収入', 2))
-items.push(new TimeLine('固定費', 3))
-items.push(new TimeLine('集計', 4))
 
 //const timePattern = [1, 7, 30, 180, 365]
 const timePattern = []
@@ -20,11 +25,36 @@ timePattern.push(new TimeLine('半年', 182.5))
 timePattern.push(new TimeLine('1年', 365))
 
 /**
+ * タブ情報
+ * @param {*} param0
+ */
+const TabInfo = (name, value, status) => {
+  return { name, value, status }
+}
+
+/**
+ *タブステータスパターン
+ */
+const TabStatus = {
+  Work: 0,
+  Holiday: 1,
+  Income: 2,
+  FixedCost: 3,
+  All: 4,
+}
+
+/**
  * メニュー生成
  * @returns メニューリスト
  */
-const times = () => {
-  return items
+const createTabMenu = () => {
+  const tabInfos = []
+  tabInfos.push(new TabInfo('平日', TabStatus.Work))
+  tabInfos.push(new TabInfo('休日', TabStatus.Holiday))
+  tabInfos.push(new TabInfo('収入', TabStatus.Income))
+  tabInfos.push(new TabInfo('固定費', TabStatus.FixedCost))
+  tabInfos.push(new TabInfo('集計', TabStatus.All))
+  return tabInfos
 }
 /**
  * 日数を元に週数を取得
@@ -36,12 +66,12 @@ const getWeek = (time) => {
 }
 
 /**
- * 平日か休日によって日数を計算する関数
- * @param {*} tab
+ * 平日か休日によって週数を計算し対応日数を算出する
+ * @param {*} status
  * @param {*} days
  * @returns
  */
-const timeCount = (tab, days) => {
+const timeCount = (status, days) => {
   if (days <= 1) {
     return days
   }
@@ -50,9 +80,9 @@ const timeCount = (tab, days) => {
   const week = getWeek(days)
 
   //平日
-  if (tab == 0) {
+  if (status == TabStatus.Work) {
     return 5 * week
-  } else if (tab == 1) {
+  } else if (status == TabStatus.Holiday) {
     //休日
     return 2 * week
   }
@@ -69,4 +99,4 @@ const getComma = (num) => {
   return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
 }
 
-export { times, timeCount, getComma, timePattern }
+export { createTabMenu, timeCount, getComma, timePattern, TimeLine, TabStatus }
