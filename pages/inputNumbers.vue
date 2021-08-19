@@ -44,6 +44,22 @@
         </div>
         <div v-else-if="item.value == 3">
           <!-- 固定費入力ページ -->
+          <v-card flat>
+            <v-card-text>
+              <v-row>
+                <v-col
+                  v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
+                  :key="moneyInfo.name + mIndex"
+                  cols="12"
+                >
+                  <other-number
+                    :tab="tab"
+                    @change-value="otherNumberSet(moneyInfo, $event)"
+                  ></other-number>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
         </div>
         <div v-else-if="item.value == 4">
           <!-- 集計ページ -->
@@ -75,12 +91,14 @@ import {
   TabStatus,
 } from '../components/Times'
 import Number from '../components/Number.vue'
+import OtherNumber from '../components/OtherNumber.vue'
 import TimelyMoney from '../components/timelyMoney.vue'
 
 export default {
   components: {
     Number,
     TimelyMoney,
+    OtherNumber,
   },
   data() {
     const tabMenus = createTabMenu()
@@ -117,6 +135,7 @@ export default {
             return item.value == tab
           })
           .map((item) => {
+            // TODO 固定費の考慮を入れないと動かない。2021/08/20
             return this.timeCalcList(this.calc(item.value), item.value)
           })
         return list
@@ -130,10 +149,13 @@ export default {
     timeCalcList(money, time) {
       //TODO 遅いと思われるので改善が必要。
       const list = timePattern.map((item) => {
-        console.log('timeCount:' + timeCount(time, item.day))
         return getComma(Math.round(money * timeCount(time, item.day)))
       })
       return list
+    },
+    otherNumberSet(moneyInfo, $event) {
+      moneyInfo.money = $event.money
+      moneyInfo.day = $event.day
     },
   },
 }

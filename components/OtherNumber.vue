@@ -20,22 +20,23 @@
         ></v-text-field>
       </v-col>
       <v-col cols="3">
-        <v-text-field
-          v-model="info.cycle"
+        <v-btn-toggle v-model="info.status" tile @change="setTimeInfo">
+          <v-btn color="blue-grey" value="1" class="mr-5" v-text="'支出'" />
+          <v-btn color="blue-grey" value="2" v-text="'収入'" />
+        </v-btn-toggle>
+      </v-col>
+      <v-col cols="3">
+        <v-select
+          v-model="info.day"
+          :items="timeList"
+          item-text="name"
+          item-value="day"
           label="周期"
           solo
           outlined
           @change="setTimeInfo"
-        ></v-text-field>
-      </v-col>
-      <v-col cols="3">
-        <v-text-field
-          v-model="info.status"
-          label="支出/収入"
-          solo
-          outlined
-          @change="setTimeInfo"
-        ></v-text-field>
+        >
+        </v-select>
       </v-col>
     </v-row>
     <v-row>
@@ -62,7 +63,7 @@ export default {
     },
   },
   data() {
-    const info = new TimeLine('', 1, 1, 0)
+    const info = new TimeLine('', 7, 1, 0)
     return {
       info,
       timePattern,
@@ -70,11 +71,21 @@ export default {
   },
   computed: {
     timeCalc() {
+      console.log('hoge' + this.info.oneDayMoney())
       const list = timePattern.map((item) => {
-        return getComma(Math.round(this.value * timeCount(this.tab, item.day)))
+        return getComma(Math.ceil(this.info.oneDayMoney() * item.day))
       })
 
       return list
+    },
+    timeList() {
+      return this.timePattern
+        .filter((time) => {
+          return time.day != 1
+        })
+        .map((time) => {
+          return time
+        })
     },
   },
   methods: {

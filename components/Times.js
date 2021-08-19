@@ -13,6 +13,12 @@ const TimeLine = (name, day, cycle, money, status) => {
     cycle,
     money,
     status: status != 1 ? 0 : status,
+    oneDayMoney: function () {
+      if (this.day == 1) {
+        return this.money
+      }
+      return this.money / this.day
+    },
   }
 }
 
