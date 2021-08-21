@@ -41,6 +41,21 @@
         </div>
         <div v-else-if="item.value == 2">
           <!-- 収入入力ページ -->
+          <v-card-text>
+            <v-row>
+              <v-col
+                v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
+                :key="moneyInfo.name + mIndex"
+                cols="12"
+              >
+                <other-number
+                  :tab="tab"
+                  :status="1"
+                  @change-value="otherNumberSet(moneyInfo, $event)"
+                ></other-number>
+              </v-col>
+            </v-row>
+          </v-card-text>
         </div>
         <div v-else-if="item.value == 3">
           <!-- 固定費入力ページ -->
@@ -54,6 +69,7 @@
                 >
                   <other-number
                     :tab="tab"
+                    :status="0"
                     @change-value="otherNumberSet(moneyInfo, $event)"
                   ></other-number>
                 </v-col>
@@ -117,10 +133,12 @@ export default {
   },
   computed: {
     calc() {
+      //TAB毎の明細の合計を算出する
       return (value) => {
         let result = 0
         this.timeMoneys[value].forEach((item) => {
-          result += item.money
+          //result += item.money
+          result += item.oneDayMoney()
         })
         return result
       }
@@ -129,6 +147,8 @@ export default {
       return (tab) => {
         if (this.tab != TabStatus.All) {
           return null
+        } else if (tab == TabStatus.All) {
+          return this.allCalc
         }
         const list = this.tabMenus
           .filter((item) => {
@@ -141,15 +161,33 @@ export default {
         return list
       }
     },
+    allCalc() {
+      const all = this.timeMoneys[TabStatus.All]
+      const tabList = [
+        TabStatus.Work,
+        TabStatus.Holiday,
+        TabStatus.Income,
+        TabStatus.FixedCost,
+      ]
+      const allList = Array(timePattern.length).fill(0)
+      tabList.forEach((item) => {
+        console.log('hoge')
+        const list = this.timesCalc(item).shift()
+        list.map((item, index) => {
+          allList[index] += +item
+        })
+      })
+      return [allList]
+    },
   },
   methods: {
     total(value) {
       return getComma(this.calc(value))
     },
-    timeCalcList(money, time) {
+    timeCalcList(money, tabStatus) {
       //TODO 遅いと思われるので改善が必要。
       const list = timePattern.map((item) => {
-        return getComma(Math.round(money * timeCount(time, item.day)))
+        return Math.round(money * timeCount(tabStatus, item.day))
       })
       return list
     },

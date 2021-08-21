@@ -1,4 +1,17 @@
 /**
+ * カンマ付与
+ * @param {*} num
+ * @returns
+ */
+const getComma = (num) => {
+  return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
+}
+
+const PayStatus = {
+  Spending: 0 /** 支出 */,
+  Income: 1 /** 収入 */,
+}
+/**
  * 明細用項目
  * @param {*} name   名称
  * @param {*} day    日数
@@ -12,12 +25,17 @@ const TimeLine = (name, day, cycle, money, status) => {
     day,
     cycle,
     money,
-    status: status != 1 ? 0 : status,
+    status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
     oneDayMoney: function () {
+      const money =
+        PayStatus.Income == this.status ? this.money * -1 : this.money
       if (this.day == 1) {
-        return this.money
+        return money
       }
-      return this.money / this.day
+      return money / this.day
+    },
+    abs: function () {
+      return Math.abs(this.oneDayMoney())
     },
   }
 }
@@ -94,15 +112,6 @@ const timeCount = (status, days) => {
   }
   //それ以外
   return days
-}
-
-/**
- * カンマ付与
- * @param {*} num
- * @returns
- */
-const getComma = (num) => {
-  return String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,')
 }
 
 export { createTabMenu, timeCount, getComma, timePattern, TimeLine, TabStatus }

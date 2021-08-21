@@ -19,12 +19,14 @@
           @change="setTimeInfo"
         ></v-text-field>
       </v-col>
+      <!--
       <v-col cols="3">
         <v-btn-toggle v-model="info.status" tile @change="setTimeInfo">
-          <v-btn color="blue-grey" value="1" class="mr-5" v-text="'支出'" />
-          <v-btn color="blue-grey" value="2" v-text="'収入'" />
+          <v-btn color="blue-grey" value="0" class="mr-5" v-text="'支出'" />
+          <v-btn color="blue-grey" value="1" v-text="'収入'" />
         </v-btn-toggle>
       </v-col>
+      -->
       <v-col cols="3">
         <v-select
           v-model="info.day"
@@ -43,9 +45,7 @@
       <v-col cols="12">
         <v-row>
           <v-col v-for="(time, index) in timePattern" :key="time.name" cols="2">
-            <v-sheet rounded>
-              日数：{{ time.name }}<BR /> 金額：{{ timeCalc[index] }}円
-            </v-sheet>
+            <total-money :name="time.name" :money="timeCalc[index]" />
           </v-col>
         </v-row>
       </v-col>
@@ -55,15 +55,23 @@
 
 <script>
 import { TimeLine, timeCount, getComma, timePattern } from './Times'
+import totalMoney from './totalMoney.vue'
 export default {
+  components: {
+    totalMoney,
+  },
   props: {
     tab: {
       type: Number,
       default: 0,
     },
+    status: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
-    const info = new TimeLine('', 7, 1, 0)
+    const info = new TimeLine('', 7, 1, 0, this.status)
     return {
       info,
       timePattern,
@@ -71,9 +79,8 @@ export default {
   },
   computed: {
     timeCalc() {
-      console.log('hoge' + this.info.oneDayMoney())
       const list = timePattern.map((item) => {
-        return getComma(Math.ceil(this.info.oneDayMoney() * item.day))
+        return Math.ceil(this.info.oneDayMoney() * item.day)
       })
 
       return list

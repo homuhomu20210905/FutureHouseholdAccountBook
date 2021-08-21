@@ -24,9 +24,7 @@
       <v-col cols="12">
         <v-row>
           <v-col v-for="(time, index) in timePattern" :key="time.name" cols="2">
-            <v-sheet rounded>
-              日数：{{ time.name }}<BR /> 金額：{{ timeCalc[index] }}円
-            </v-sheet>
+            <total-money :name="time.name" :money="timeCalc[index]" />
           </v-col>
         </v-row>
       </v-col>
@@ -36,7 +34,11 @@
 
 <script>
 import { times, timeCount, getComma, timePattern } from '../components/Times'
+import totalMoney from './totalMoney.vue'
 export default {
+  components: {
+    totalMoney,
+  },
   props: {
     name: {
       type: String,
@@ -61,7 +63,7 @@ export default {
   computed: {
     timeCalc() {
       const list = timePattern.map((item) => {
-        return getComma(Math.round(this.value * timeCount(this.tab, item.day)))
+        return Math.round(this.value * timeCount(this.tab, item.day))
       })
 
       return list
