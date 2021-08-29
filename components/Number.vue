@@ -34,7 +34,7 @@
 
 <script>
 import { times, timeCount, getComma, timePattern } from '../components/Times'
-import totalMoney from './totalMoney.vue'
+import totalMoney from './TotalMoney.vue'
 export default {
   components: {
     totalMoney,

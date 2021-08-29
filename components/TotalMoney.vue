@@ -10,8 +10,9 @@
 </template>
 
 <script>
-import { times, timeCount, getComma, timePattern } from '../components/Times'
+import { times, timeCount, getComma, timePattern } from './Times'
 export default {
+  name: 'TotalMoney',
   props: {
     money: {
       type: Number,

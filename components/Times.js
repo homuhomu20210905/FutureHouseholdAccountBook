@@ -12,6 +12,20 @@ const PayStatus = {
   Income: 1 /** 収入 */,
 }
 /**
+ * 周期ステータス
+ */
+const CycleStatus = {
+  One: { day: 1, value: 1, start: 1 },
+  Week: { day: 7, value: 2, start: 1 },
+  Month: { day: 30, value: 3, start: 1 },
+  TwoMonth: { day: 60, value: 7, start: 1 },
+  HalfYear: { day: 182.5, value: 4, start: 1 },
+  Year: { day: 365, value: 5, start: 1 },
+  Any: { day: 0, value: 6, start: 0 },
+  Other: { day: 0, value: 9, start: 0 },
+}
+
+/**
  * 明細用項目
  * @param {*} name   名称
  * @param {*} day    日数
@@ -19,16 +33,27 @@ const PayStatus = {
  * @param {*} status ステータス(支出/収入)
  *  @returns
  */
-const TimeLine = (name, day, cycle, money, status) => {
+const TimeLine = (name, cycle, money, status) => {
   return {
     name,
-    day,
+    get day() {
+      return this.cycle.day
+    },
+    set day(day_) {
+      let cycle = null
+      for (const obj in CycleStatus) {
+        if (obj.day == day_) {
+          cycle = obj
+          break
+        }
+      }
+      this.cycle = cycle
+    },
     cycle,
     money,
     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
     oneDayMoney: function () {
-      const money =
-        PayStatus.Income == this.status ? this.money * -1 : this.money
+      const money = this.pay()
       if (this.day == 1) {
         return money
       }
@@ -37,23 +62,26 @@ const TimeLine = (name, day, cycle, money, status) => {
     abs: function () {
       return Math.abs(this.oneDayMoney())
     },
+    pay: function () {
+      return PayStatus.Income == this.status ? this.money * -1 : this.money
+    },
   }
 }
-
 //const timePattern = [1, 7, 30, 180, 365]
 const timePattern = []
-timePattern.push(new TimeLine('1日', 1))
-timePattern.push(new TimeLine('1週間', 7))
-timePattern.push(new TimeLine('1ヶ月', 30))
-timePattern.push(new TimeLine('半年', 182.5))
-timePattern.push(new TimeLine('1年', 365))
+timePattern.push(new TimeLine('1日', CycleStatus.One))
+timePattern.push(new TimeLine('1週間', CycleStatus.Week))
+timePattern.push(new TimeLine('1ヶ月', CycleStatus.Month))
+timePattern.push(new TimeLine('2ヶ月', CycleStatus.TwoMonth))
+timePattern.push(new TimeLine('半年', CycleStatus.HalfYear))
+timePattern.push(new TimeLine('1年', CycleStatus.Year))
 
 /**
  * タブ情報
  * @param {*} param0
  */
-const TabInfo = (name, value, status) => {
-  return { name, value, status }
+const TabInfo = (name, value, cycle) => {
+  return { name, value, cycle }
 }
 
 /**
@@ -65,6 +93,7 @@ const TabStatus = {
   Income: 2,
   FixedCost: 3,
   All: 4,
+  Calendar: 5,
 }
 
 /**
@@ -73,11 +102,14 @@ const TabStatus = {
  */
 const createTabMenu = () => {
   const tabInfos = []
-  tabInfos.push(new TabInfo('平日', TabStatus.Work))
-  tabInfos.push(new TabInfo('休日', TabStatus.Holiday))
-  tabInfos.push(new TabInfo('収入', TabStatus.Income))
-  tabInfos.push(new TabInfo('固定費', TabStatus.FixedCost))
-  tabInfos.push(new TabInfo('集計', TabStatus.All))
+  tabInfos.push(new TabInfo('平日', TabStatus.Work, CycleStatus.One))
+  tabInfos.push(new TabInfo('休日', TabStatus.Holiday, CycleStatus.One))
+  tabInfos.push(new TabInfo('収入', TabStatus.Income, CycleStatus.Any))
+  tabInfos.push(new TabInfo('固定費', TabStatus.FixedCost, CycleStatus.Any))
+  tabInfos.push(new TabInfo('集計', TabStatus.All, CycleStatus.Any))
+  tabInfos.push(
+    new TabInfo('カレンダー', TabStatus.Calendar, CycleStatus.Other)
+  )
   return tabInfos
 }
 /**
@@ -114,4 +146,13 @@ const timeCount = (status, days) => {
   return days
 }
 
-export { createTabMenu, timeCount, getComma, timePattern, TimeLine, TabStatus }
+export {
+  CycleStatus,
+  createTabMenu,
+  timeCount,
+  getComma,
+  timePattern,
+  TimeLine,
+  TabStatus,
+  PayStatus,
+}
