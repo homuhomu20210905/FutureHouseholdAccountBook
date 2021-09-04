@@ -3,3 +3,4 @@ node_modules/ # ディレクトリ 'node_modules'を除外
 
 *.log　# 拡張子が log のファイルを除外
 
+node_modules
