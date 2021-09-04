@@ -2,8 +2,9 @@
 
 <head>
   <script>
-    location.href = '/FutureHouseholdAccountBook/'
-  </script>
+    var pathName = window.location.pathname;
+    var redirectPath = '/FutureHouseholdAccountBook/redirect';
+    location.href = redirectPath + '?p=' + encodeURI(pathName);  </script>
 </head>
 
 </html>
