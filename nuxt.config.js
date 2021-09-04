@@ -3,7 +3,7 @@ const environment = process.env.NODE_ENV || 'local'
 import penv from "./env/production.js"
 import lenv from "./env/local.js"
 console.log(environment)
-const url =()=>{
+const env =()=>{
   if(process.env.NODE_ENV == "production"){
     return penv
   }else{
@@ -13,7 +13,7 @@ const url =()=>{
 
 export default {
   router: {
-    base: url().BASE_URL  
+    base: '/FutureHouseholdAccountBook/'  
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -34,7 +34,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: `${url().BASE_URL}/favicon.ico` }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: `${env().BASE_URL}/favicon.ico` }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
