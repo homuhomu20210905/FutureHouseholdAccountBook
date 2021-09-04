@@ -1,9 +1,19 @@
 import colors from 'vuetify/es5/util/colors'
 const environment = process.env.NODE_ENV || 'local'
-import env from `./env/${environment}.js`
+import penv from "./env/production.js"
+import lenv from "./env/local.js"
+console.log(environment)
+const url =()=>{
+  if(process.env.NODE_ENV == "production"){
+    return penv
+  }else{
+    return lenv
+  }
+}
+
 export default {
   router: {
-    base: env.BASE_URL  
+    base: url().BASE_URL  
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -24,7 +34,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: `${env.BASE_URL}/favicon.ico` }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: `${url().BASE_URL}/favicon.ico` }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
