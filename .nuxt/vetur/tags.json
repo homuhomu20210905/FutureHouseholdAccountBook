@@ -1,0 +1,32 @@
+{
+  "Number": {
+    "description": "Auto imported from components/Number.vue"
+  },
+  "NuxtLogo": {
+    "description": "Auto imported from components/NuxtLogo.vue"
+  },
+  "OtherNumber": {
+    "description": "Auto imported from components/OtherNumber.vue"
+  },
+  "PeriodSelect": {
+    "description": "Auto imported from components/PeriodSelect.vue"
+  },
+  "Times": {
+    "description": "Auto imported from components/Times.js"
+  },
+  "TotalMoney": {
+    "description": "Auto imported from components/TotalMoney.vue"
+  },
+  "Tutorial": {
+    "description": "Auto imported from components/Tutorial.vue"
+  },
+  "VuetifyLogo": {
+    "description": "Auto imported from components/VuetifyLogo.vue"
+  },
+  "DaysjsJa": {
+    "description": "Auto imported from components/daysjs-ja.js"
+  },
+  "TimelyMoney": {
+    "description": "Auto imported from components/timelyMoney.vue"
+  }
+}

@@ -1,0 +1,12 @@
+import { wrapFunctional } from './utils'
+
+export { default as Number } from '../../components/Number.vue'
+export { default as NuxtLogo } from '../../components/NuxtLogo.vue'
+export { default as OtherNumber } from '../../components/OtherNumber.vue'
+export { default as PeriodSelect } from '../../components/PeriodSelect.vue'
+export { default as Times } from '../../components/Times.js'
+export { default as TotalMoney } from '../../components/TotalMoney.vue'
+export { default as Tutorial } from '../../components/Tutorial.vue'
+export { default as VuetifyLogo } from '../../components/VuetifyLogo.vue'
+export { default as DaysjsJa } from '../../components/daysjs-ja.js'
+export { default as TimelyMoney } from '../../components/timelyMoney.vue'

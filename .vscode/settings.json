@@ -1,7 +1,0 @@
-{
-  // Prettier の ESLint 連携
-  "prettier.eslintIntegration": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-}
