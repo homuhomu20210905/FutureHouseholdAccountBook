@@ -32,6 +32,13 @@
         >
         </v-select>
       </v-col>
+      <v-col cols="3">
+        <period-select
+          :day="info.day"
+          :start="info.cycle.start"
+          @period-select="changePeriod($event)"
+        />
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
@@ -71,10 +78,11 @@ const OtherTime = (name, day, cycle, money, status) => {
   }
 }
 import TotalMoney from '../components/TotalMoney.vue'
-
+import PeriodSelect from '../components/PeriodSelect.vue'
 export default {
   components: {
     TotalMoney,
+    PeriodSelect,
   },
   props: {
     tab: {
@@ -87,15 +95,8 @@ export default {
     },
   },
   data() {
-    const info = new OtherTime(
-      '',
-      CycleStatus.Week.day,
-      CycleStatus.Week,
-      0,
-      this.status
-    )
     return {
-      info,
+      info: new OtherTime('', 7, CycleStatus.Week, 0, this.status),
       timePattern,
     }
   },
@@ -115,7 +116,14 @@ export default {
   },
   methods: {
     setTimeInfo() {
+      console.log(JSON.stringify(this.info, null, 3))
       this.$emit('change-value', this.info)
+    },
+    changePeriod($event) {
+      if ($event) {
+        this.info.cycle.start = $event
+      }
+      this.setTimeInfo()
     },
   },
 }

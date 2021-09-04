@@ -23,6 +23,20 @@ const CycleStatus = {
   Year: { day: 365, value: 5, start: 1 },
   Any: { day: 0, value: 6, start: 0 },
   Other: { day: 0, value: 9, start: 0 },
+  find(key, value) {
+    const list = [
+      this.Week,
+      this.Month,
+      this.TwoMonth,
+      this.HalfYear,
+      this.Year,
+      this.Any,
+      this.Other,
+    ].filter((obj) => {
+      return obj[key] == value
+    })
+    return list
+  },
 }
 
 /**
@@ -40,21 +54,14 @@ const TimeLine = (name, cycle, money, status) => {
       return this.cycle.day
     },
     set day(day_) {
-      let cycle = null
-      for (const obj in CycleStatus) {
-        if (obj.day == day_) {
-          cycle = obj
-          break
-        }
-      }
-      this.cycle = cycle
+      this.cycle.day = day_
     },
     cycle,
     money,
     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
     oneDayMoney: function () {
       const money = this.pay()
-      if (this.day == 1) {
+      if (this.day <= 1 || !this.day) {
         return money
       }
       return money / this.day
@@ -63,7 +70,7 @@ const TimeLine = (name, cycle, money, status) => {
       return Math.abs(this.oneDayMoney())
     },
     pay: function () {
-      return PayStatus.Income == this.status ? this.money * -1 : this.money
+      return PayStatus.Income == this.status ? this.money * -1 : +this.money
     },
   }
 }
@@ -88,12 +95,12 @@ const TabInfo = (name, value, cycle) => {
  *タブステータスパターン
  */
 const TabStatus = {
-  Work: 0,
-  Holiday: 1,
-  Income: 2,
-  FixedCost: 3,
-  All: 4,
-  Calendar: 5,
+  Work: 'Work',
+  Holiday: 'Holiday',
+  Income: 'Income',
+  FixedCost: 'FixedCost',
+  All: 'All',
+  Calendar: 'Calendar',
 }
 
 /**
