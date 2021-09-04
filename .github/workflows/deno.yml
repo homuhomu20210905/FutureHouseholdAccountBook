@@ -39,10 +39,9 @@ jobs:
         run: deno test -A --unstable
       - name: Install and Build 🔧
         run: |
-          npm
-          yarn build
+          npm run generate
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: homuhomu20210905/FutureHouseholdAccountBook
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages 
