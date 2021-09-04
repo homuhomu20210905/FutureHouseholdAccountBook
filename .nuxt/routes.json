@@ -28,6 +28,13 @@
     "_name": "_c114f804"
   },
   {
+    "name": "redirect",
+    "path": "/redirect",
+    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/redirect.vue",
+    "chunkName": "pages/redirect",
+    "_name": "_1c671b30"
+  },
+  {
     "name": "index",
     "path": "/",
     "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/index.vue",

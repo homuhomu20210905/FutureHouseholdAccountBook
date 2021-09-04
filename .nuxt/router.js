@@ -8,6 +8,7 @@ const _b3378bfc = () => interopDefault(import('../pages/chart.vue' /* webpackChu
 const _263aafa0 = () => interopDefault(import('../pages/chart2.vue' /* webpackChunkName: "pages/chart2" */))
 const _512114a8 = () => interopDefault(import('../pages/inputNumbers.vue' /* webpackChunkName: "pages/inputNumbers" */))
 const _c114f804 = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
+const _1c671b30 = () => interopDefault(import('../pages/redirect.vue' /* webpackChunkName: "pages/redirect" */))
 const _1801f0f6 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
@@ -16,7 +17,7 @@ Vue.use(Router)
 
 export const routerOptions = {
   mode: 'history',
-  base: '/FutureHouseholdAccountBook/',
+  base: '/',
   linkActiveClass: 'nuxt-link-active',
   linkExactActiveClass: 'nuxt-link-exact-active',
   scrollBehavior,
@@ -37,6 +38,10 @@ export const routerOptions = {
     path: "/inspire",
     component: _c114f804,
     name: "inspire"
+  }, {
+    path: "/redirect",
+    component: _1c671b30,
+    name: "redirect"
   }, {
     path: "/",
     component: _1801f0f6,

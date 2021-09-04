@@ -13,7 +13,7 @@ const env =()=>{
 
 export default {
   router: {
-    base: '/FutureHouseholdAccountBook/'  
+    base: env().BASE_URL  
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
