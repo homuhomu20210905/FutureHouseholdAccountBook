@@ -1,3 +1,3 @@
 export default {
-    BASE_URL: '/FutureHouseholdAccountBook/'
+    BASE_URL: 'http://homuhomu20210905.github.io/FutureHouseholdAccountBook/'
 }
