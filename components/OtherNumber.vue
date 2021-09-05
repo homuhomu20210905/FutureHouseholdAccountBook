@@ -54,6 +54,8 @@
 
 <script>
 import { CycleStatus, timePattern, PayStatus } from './Times'
+import TotalMoney from '../components/TotalMoney.vue'
+import PeriodSelect from '../components/PeriodSelect.vue'
 
 const OtherTime = (name, day, cycle, money, status) => {
   return {
@@ -77,8 +79,6 @@ const OtherTime = (name, day, cycle, money, status) => {
     },
   }
 }
-import TotalMoney from '../components/TotalMoney.vue'
-import PeriodSelect from '../components/PeriodSelect.vue'
 export default {
   components: {
     TotalMoney,
@@ -94,32 +94,32 @@ export default {
       default: 0,
     },
   },
-  data() {
+  data () {
     return {
       info: new OtherTime('', 7, CycleStatus.Week, 0, this.status),
       timePattern,
     }
   },
   computed: {
-    timeCalc() {
+    timeCalc () {
       const list = this.timePattern.map((item) => {
         return Math.ceil(this.info.oneDayMoney() * item.day)
       })
 
       return list
     },
-    timeList() {
+    timeList () {
       return this.timePattern.filter((time) => {
         return time.day != 1
       })
     },
   },
   methods: {
-    setTimeInfo() {
+    setTimeInfo () {
       console.log(JSON.stringify(this.info, null, 3))
       this.$emit('change-value', this.info)
     },
-    changePeriod($event) {
+    changePeriod ($event) {
       if ($event) {
         this.info.cycle.start = $event
       }

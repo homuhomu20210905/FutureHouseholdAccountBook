@@ -5,7 +5,7 @@
 <script>
 export default {
   layout: 'blank',
-  fetch({base, redirect, query}) {
+  fetch ({ base, redirect, query }) {
     const param = query.p
     if (param === undefined) {
       return redirect('/')

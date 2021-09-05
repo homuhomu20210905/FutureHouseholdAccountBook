@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { CycleStatus, timePattern, PayStatus } from './Times'
+import { CycleStatus, } from './Times'
 
 const weekdays = ['日', '月', '火', '水', '木', '金', '土'].map(
   (name, index) => {
@@ -45,20 +45,20 @@ export default {
       default: 0,
     },
   },
-  data() {
+  data () {
     return {
       value: this.start,
     }
   },
   computed: {
-    timeCalc() {
+    timeCalc () {
       const list = this.timePattern.map((item) => {
         return Math.ceil(this.info.oneDayMoney() * item.day)
       })
 
       return list
     },
-    periods() {
+    periods () {
       const list = CycleStatus.find('day', this.day)
       if (!list && list.length == 0) {
         return dummy
@@ -74,13 +74,13 @@ export default {
       return dummy
     },
   },
-  created() {
+  created () {
     if (this.periods.length > 0) {
       this.value = this.periods[0].value
     }
   },
   methods: {
-    setTimeInfo() {
+    setTimeInfo () {
       if (this.periods.filter((item) => item.value == this.value).length == 0) {
         this.value = this.periods[0].value
       }

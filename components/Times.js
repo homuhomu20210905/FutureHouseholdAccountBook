@@ -23,7 +23,7 @@ const CycleStatus = {
   Year: { day: 365, value: 5, start: 1 },
   Any: { day: 0, value: 6, start: 0 },
   Other: { day: 0, value: 9, start: 0 },
-  find(key, value) {
+  find (key, value) {
     const list = [
       this.Week,
       this.Month,
@@ -50,10 +50,10 @@ const CycleStatus = {
 const TimeLine = (name, cycle, money, status) => {
   return {
     name,
-    get day() {
+    get day () {
       return this.cycle.day
     },
-    set day(day_) {
+    set day (day_) {
       this.cycle.day = day_
     },
     cycle,
@@ -74,7 +74,7 @@ const TimeLine = (name, cycle, money, status) => {
     },
   }
 }
-//const timePattern = [1, 7, 30, 180, 365]
+// const timePattern = [1, 7, 30, 180, 365]
 const timePattern = []
 timePattern.push(new TimeLine('1日', CycleStatus.One))
 timePattern.push(new TimeLine('1週間', CycleStatus.Week))
@@ -139,17 +139,17 @@ const timeCount = (status, days) => {
     return days
   }
 
-  //週
+  // 週
   const week = getWeek(days)
 
-  //平日
+  // 平日
   if (status == TabStatus.Work) {
     return 5 * week
   } else if (status == TabStatus.Holiday) {
-    //休日
+    // 休日
     return 2 * week
   }
-  //それ以外
+  // それ以外
   return days
 }
 

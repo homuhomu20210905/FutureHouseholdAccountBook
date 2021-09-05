@@ -4,7 +4,7 @@ import { Bar } from 'vue-chartjs'
 export default {
   name: 'Chart',
   extends: Bar,
-  data() {
+  data () {
     return {
       data: {
         labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -62,7 +62,7 @@ export default {
       },
     }
   },
-  mounted() {
+  mounted () {
     this.renderChart(this.data, this.options)
   },
 }

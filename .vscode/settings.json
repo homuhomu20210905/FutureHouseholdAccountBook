@@ -9,7 +9,6 @@
     },
     "eslint.validate": [
       "javascript",
-      "javascriptreact",
       "vue"
     ],
     "editor.codeActionsOnSave": {

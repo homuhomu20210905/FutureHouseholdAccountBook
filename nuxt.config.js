@@ -1,19 +1,19 @@
 import colors from 'vuetify/es5/util/colors'
+import penv from './env/production.js'
+import lenv from './env/local.js'
 const environment = process.env.NODE_ENV || 'local'
-import penv from "./env/production.js"
-import lenv from "./env/local.js"
 console.log(environment)
-const env =()=>{
-  if(process.env.NODE_ENV == "production"){
+const env = () => {
+  if (process.env.NODE_ENV == 'production') {
     return penv
-  }else{
+  } else {
     return lenv
   }
 }
 
 export default {
   router: {
-    base: env().BASE_URL  
+    base: env().BASE_URL
   },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -82,7 +82,7 @@ export default {
   build: {
     babel: {
       // envName: server, client, modern
-      presets({ envName }) {
+      presets ({ envName }) {
         return [
           [
             '@nuxt/babel-preset-app',
@@ -93,7 +93,7 @@ export default {
         ]
       },
     },
-    extend(config, ctx) {
+    extend (config, ctx) {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',

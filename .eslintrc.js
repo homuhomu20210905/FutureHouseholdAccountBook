@@ -1,20 +1,21 @@
-module.expots = {
-    env: {
-        bowse: tue,
-        es6: tue,
-        node:tue,
-    },
-
-    extends: 'eslint:ecommended',
-
-    ules: {
-        indent: ['eo', 4],
-
-        quotes: ['eo', 'single'],
-
-        semi: ['eo', 'always'],
-    },
-    paseOptions: {
-        souceType: 'module',
-    },
-};
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true
+  },
+  extends: [
+    'plugin:vue/essential',
+    'standard'
+  ],
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: 'module'
+  },
+  plugins: [
+    'vue'
+  ],
+  rules: {
+    'comma-dangle': 0,
+    eqeqeq: 0
+  }
+}

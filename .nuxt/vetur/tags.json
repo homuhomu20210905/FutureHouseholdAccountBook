@@ -26,6 +26,9 @@
   "DaysjsJa": {
     "description": "Auto imported from components/daysjs-ja.js"
   },
+  "Sparkline": {
+    "description": "Auto imported from components/sparkline.vue"
+  },
   "TimelyMoney": {
     "description": "Auto imported from components/timelyMoney.vue"
   }

@@ -33,47 +33,47 @@
 </template>
 
 <script>
-import { times, timeCount, getComma, timePattern } from '../components/Times'
+import { timeCount, timePattern } from '../components/Times'
 import totalMoney from './TotalMoney.vue'
 export default {
   components: {
-    totalMoney,
+    totalMoney
   },
   props: {
     name: {
       type: String,
-      default: '',
+      default: ''
     },
     money: {
       type: Number,
-      default: 0,
+      default: 0
     },
     tab: {
       type: Number,
-      default: 0,
-    },
+      default: 0
+    }
   },
-  data() {
+  data () {
     return {
       useName: '',
       value: 0,
-      timePattern,
+      timePattern
     }
   },
   computed: {
-    timeCalc() {
+    timeCalc () {
       const list = timePattern.map((item) => {
         return Math.round(this.value * timeCount(this.tab, item.day))
       })
 
       return list
-    },
+    }
   },
   methods: {
-    setMoney() {
+    setMoney () {
       console.log('set money called!!' + this.value)
       this.$emit('change-value', +this.value)
-    },
-  },
+    }
+  }
 }
 </script>

@@ -41,6 +41,11 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar> -->
+    <V-row>
+      <v-col cols="12">
+        <spark-line/>
+      </v-col>
+    </V-row>
     <v-main>
       <v-container>
         <Nuxt />
@@ -63,8 +68,12 @@
 </template>
 
 <script>
+import sparkLine from '../components/sparkline.vue'
 export default {
-  data() {
+  components: {
+    sparkLine
+  },
+  data () {
     return {
       clipped: false,
       drawer: false,
@@ -73,19 +82,19 @@ export default {
         {
           icon: 'mdi-apps',
           title: 'Welcome',
-          to: '/',
+          to: '/'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
-          to: '/inspire',
-        },
+          to: '/inspire'
+        }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
+      title: 'Vuetify.js'
     }
-  },
+  }
 }
 </script>

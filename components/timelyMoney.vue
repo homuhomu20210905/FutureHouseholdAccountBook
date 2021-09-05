@@ -9,19 +9,19 @@
 </template>
 
 <script>
-import { times, timeCount, getComma, timePattern } from '../components/Times'
+import { timePattern } from '../components/Times'
 export default {
   props: {
     moneys: {
       type: Array,
-      default: new Array(),
+      default: null,
     },
   },
-  data() {
+  data () {
     return {}
   },
   computed: {
-    moneyList() {
+    moneyList () {
       if (!this.moneys) {
         return []
       }

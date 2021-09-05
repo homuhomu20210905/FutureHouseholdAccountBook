@@ -126,20 +126,18 @@ import Number from '../components/Number.vue'
 import OtherNumber from '../components/OtherNumber.vue'
 import TimelyMoney from '../components/timelyMoney.vue'
 import { dayjs } from '../components/daysjs-ja'
-import { PolarArea } from 'vue-chartjs'
-import { helpers } from 'chart.js'
 export default {
   components: {
     Number,
     TimelyMoney,
     OtherNumber,
   },
-  data() {
+  data () {
     const tabMenus = createTabMenu()
     const timeMoneys = {}
     tabMenus.forEach((item) => {
       timeMoneys[item.value] = []
-      for (var i = 0; i < 10; i++) {
+      for (let i = 0; i < 10; i++) {
         timeMoneys[item.value].push(
           new TimeLine('', Object.assign({}, item.cycle), 0)
         )
@@ -154,8 +152,8 @@ export default {
     }
   },
   computed: {
-    //TAB毎の1日単位の合計を求める
-    tabSummaryOneDayMoney() {
+    // TAB毎の1日単位の合計を求める
+    tabSummaryOneDayMoney () {
       return (tab) => {
         let result = 0
         this.timeMoneys[tab].forEach((item) => {
@@ -164,7 +162,7 @@ export default {
         return result
       }
     },
-    tabIndex() {
+    tabIndex () {
       const list = []
       list.push(TabStatus.Work)
       list.push(TabStatus.Holiday)
@@ -174,8 +172,8 @@ export default {
       list.push(TabStatus.Calendar)
       return list[this.tab]
     },
-    //TAB毎の期間毎の合計を求め、配列として返す
-    allSummaryOneDayMoney() {
+    // TAB毎の期間毎の合計を求め、配列として返す
+    allSummaryOneDayMoney () {
       return (tab) => {
         if (this.tabIndex != TabStatus.All) {
           return null
@@ -188,14 +186,14 @@ export default {
           })
           .map((item) => {
             // TODO 固定費の考慮を入れないと動かない。2021/08/20
-            let money = this.tabSummaryOneDayMoney(item.value)
+            const money = this.tabSummaryOneDayMoney(item.value)
             console.log('■' + money)
             return this.timeCalcList(money, item.value)
           })
       }
     },
     // 集計タブ用期間合計算出
-    allOnlySummaryOneDayMoney() {
+    allOnlySummaryOneDayMoney () {
       const tabList = [
         TabStatus.Work,
         TabStatus.Holiday,
@@ -205,14 +203,14 @@ export default {
       const allList = Array(timePattern.length).fill(0)
       tabList.forEach((item) => {
         const list = this.allSummaryOneDayMoney(item).shift()
-        list.map((item, index) => {
+        list.forEach((item, index) => {
           allList[index] += +item
         })
       })
       return [allList]
     },
-    //１年間の日付の配列を生成
-    dateList() {
+    // １年間の日付の配列を生成
+    dateList () {
       let date = this.currentDate
       const list = []
       for (let i = 0; i < 365; i++) {
@@ -224,9 +222,9 @@ export default {
       }
       return list
     },
-    //パラメータの日付によって、期間ごとの金額を返す
-    //日次〜年次までの必要な金額を加算して返す。(カレンダー用)
-    aggregationDateToSummaryMoney() {
+    // パラメータの日付によって、期間ごとの金額を返す
+    // 日次〜年次までの必要な金額を加算して返す。(カレンダー用)
+    aggregationDateToSummaryMoney () {
       /** 日によって金額を算出する */
       /** 週単位以降の金額は期間を元に算出する */
       const END_DATE = dayjs(this.currentDate).add(1, 'year')
@@ -256,10 +254,10 @@ export default {
       const calc = (day, pDate) => {
         const date = pDate.format('YYYY/MM/DD')
         let result = 0
-        //週単位
+        // 週単位
         result += objFixedCost[CycleStatus.Week.day + '-' + day] || 0
         result += objIncome[CycleStatus.Week.day + '-' + day] || 0
-        //月単位
+        // 月単位
         const endMonth = pDate.endOf('month').format('YYYY/MM/DD')
         const firstMonth = pDate.startOf('month').format('YYYY/MM/DD')
         const month = (status) => {
@@ -280,7 +278,7 @@ export default {
         }
         result += month(CycleStatus.Month)
         result += month(CycleStatus.TwoMonth)
-        //半年
+        // 半年
         if (
           halfYears.filter((item) => {
             return item == date
@@ -289,7 +287,7 @@ export default {
           result += objIncome[CycleStatus.HalfYear.day + '-' + 1] || 0
           result += objFixedCost[CycleStatus.HalfYear.day + '-' + 1] || 0
         }
-        //１年
+        // １年
         if (
           years.filter((item) => {
             return item == date
@@ -316,15 +314,15 @@ export default {
     },
   },
   methods: {
-    periodCalc(status) {
+    periodCalc (status) {
       /**
        * ここの処理の戻り値をオブジェクトにする。
        * 週次、月次、年次などの要素枚に金額をセットする。
        * 固定費又は収入の場合にこのメソッドを呼び出す。
        */
 
-      //TAB毎の集計
-      let result = {}
+      // TAB毎の集計
+      const result = {}
       this.timeMoneys[status].forEach((item) => {
         const key = item.day + '-' + item.cycle.start
         if (!result[key]) {
@@ -335,17 +333,17 @@ export default {
       })
       return result
     },
-    total(value) {
+    total (value) {
       return getComma(this.tabSummaryOneDayMoney(value))
     },
-    timeCalcList(money, tabStatus) {
-      //TODO 遅いと思われるので改善が必要。
+    timeCalcList (money, tabStatus) {
+      // TODO 遅いと思われるので改善が必要。
       const list = timePattern.map((item) => {
         return Math.round(money * timeCount(tabStatus, item.day))
       })
       return list
     },
-    otherNumberSet(value, index, $event) {
+    otherNumberSet (value, index, $event) {
       this.timeMoneys[value][index].money = $event.money
       this.timeMoneys[value][index].day = $event.day
       this.timeMoneys[value][index].cycle.value = $event.cycle.value

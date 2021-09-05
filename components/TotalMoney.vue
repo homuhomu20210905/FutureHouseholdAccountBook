@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { times, timeCount, getComma, timePattern } from './Times'
+// import { times, timeCount, getComma, timePattern } from './Times'
 export default {
   name: 'TotalMoney',
   props: {
@@ -23,18 +23,18 @@ export default {
       default: '',
     },
   },
-  data() {
+  data () {
     return {}
   },
   computed: {
-    changeColor() {
+    changeColor () {
       if (this.money >= 0) {
         return ''
       } else {
         return 'teal lighten-4--text'
       }
     },
-    absMoney() {
+    absMoney () {
       return Math.abs(this.money)
     },
   },
