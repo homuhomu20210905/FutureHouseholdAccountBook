@@ -8,10 +8,15 @@
       "*.vue": "vue"
     },
     "eslint.validate": [
+      "vue",
+      "html",
       "javascript",
-      "vue"
+      "typescript",
+      "javascriptreact",
+      "typescriptreact"
     ],
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
-    }
+    },
+    "vetur.validation.template": false
   }

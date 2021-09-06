@@ -41,15 +41,17 @@
         <v-icon>mdi-menu</v-icon>
       </v-btn>
     </v-app-bar> -->
-    <V-row>
-      <v-col cols="12">
-        <spark-line/>
-      </v-col>
-    </V-row>
     <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
+      <v-row>
+        <v-col cols="12">
+          <spark-line />
+        </v-col>
+        <v-col cols="12">
+          <v-container>
+            <Nuxt />
+          </v-container>
+        </v-col>
+      </v-row>
     </v-main>
     <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>

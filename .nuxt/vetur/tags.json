@@ -31,5 +31,14 @@
   },
   "TimelyMoney": {
     "description": "Auto imported from components/timelyMoney.vue"
+  },
+  "Topmessage01": {
+    "description": "Auto imported from components/topmessage01.vue"
+  },
+  "Topmessage02": {
+    "description": "Auto imported from components/topmessage02.vue"
+  },
+  "Topmessage03": {
+    "description": "Auto imported from components/topmessage03.vue"
   }
 }

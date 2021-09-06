@@ -17,3 +17,6 @@ You can directly use them in pages and other components without the need to impo
 - `<DaysjsJa>` | `<daysjs-ja>` (components/daysjs-ja.js)
 - `<Sparkline>` | `<sparkline>` (components/sparkline.vue)
 - `<TimelyMoney>` | `<timely-money>` (components/timelyMoney.vue)
+- `<Topmessage01>` | `<topmessage01>` (components/topmessage01.vue)
+- `<Topmessage02>` | `<topmessage02>` (components/topmessage02.vue)
+- `<Topmessage03>` | `<topmessage03>` (components/topmessage03.vue)

@@ -12,7 +12,7 @@
     :type="type"
     :auto-line-width="autoLineWidth"
     auto-draw
-  ></v-sparkline>
+  />
 </template>
 
 <script>
@@ -25,6 +25,14 @@ const gradients = [
   ['#f72047', '#ffd200', '#1feaea'],
 ]
 
+const random = (n) => {
+  function getRandomInt (max) {
+    return Math.floor(Math.random() * max)
+  }
+  const list = []
+  for (let i = 0; i < n; i++) { list.push(getRandomInt(n)) }
+  return list
+}
 export default {
   data: () => ({
     width: 2,
@@ -32,7 +40,7 @@ export default {
     padding: 8,
     lineCap: 'round',
     gradient: gradients[5],
-    value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+    value: random(100),
     gradientDirection: 'top',
     gradients,
     fill: false,
