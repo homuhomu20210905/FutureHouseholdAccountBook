@@ -1,5 +1,8 @@
 <template>
-  <v-card class="grey darken-3" outlined>
+  <v-card
+    class="grey darken-3"
+    outlined
+  >
     <v-row>
       <v-col cols="6">
         <v-text-field
@@ -7,7 +10,7 @@
           label="用途"
           solo
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="6">
         <v-text-field
@@ -17,14 +20,21 @@
           outlined
           suffix="円"
           @change="setMoney"
-        ></v-text-field>
+        />
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12">
         <v-row>
-          <v-col v-for="(time, index) in timePattern" :key="time.name" cols="2">
-            <total-money :name="time.name" :money="timeCalc[index]" />
+          <v-col
+            v-for="(time, index) in timePattern"
+            :key="time.name"
+            cols="2"
+          >
+            <total-money
+              :name="time.name"
+              :money="timeCalc[index]"
+            />
           </v-col>
         </v-row>
       </v-col>

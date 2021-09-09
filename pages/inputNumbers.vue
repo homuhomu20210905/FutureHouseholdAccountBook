@@ -4,14 +4,25 @@
       金額を入力してください。
     </v-card-title>
 
-    <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-      <v-tab v-for="item in tabMenus" :key="item.name">
+    <v-tabs
+      v-model="tab"
+      background-color="transparent"
+      color="basil"
+      grow
+    >
+      <v-tab
+        v-for="item in tabMenus"
+        :key="item.name"
+      >
         {{ item.name }}
       </v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item v-for="item in tabMenus" :key="item.name">
+      <v-tab-item
+        v-for="item in tabMenus"
+        :key="item.name"
+      >
         <div
           v-if="item.value == TabStatus.Work || item.value == TabStatus.Holiday"
         >
@@ -26,7 +37,7 @@
                   <number
                     :tab="tab"
                     @change-value="moneyInfo.money = $event"
-                  ></number>
+                  />
                 </v-col>
               </v-row>
             </v-card-text>
@@ -54,7 +65,7 @@
                   :tab="tab"
                   :status="1"
                   @change-value="otherNumberSet(item.value, mIndex, $event)"
-                ></other-number>
+                />
               </v-col>
             </v-row>
           </v-card-text>
@@ -73,7 +84,7 @@
                     :tab="tab"
                     :status="0"
                     @change-value="otherNumberSet(item.value, mIndex, $event)"
-                  ></other-number>
+                  />
                 </v-col>
               </v-row>
             </v-card-text>
@@ -100,9 +111,13 @@
         <!-- TODO 集計データをここに渡せれば金額を入れ込むことができるはず。。。。 -->
         <div v-if="item.value == TabStatus.Calendar">
           <v-row>
-            <v-col v-for="dt in dateList" :key="dt.view" cols="4">
+            <v-col
+              v-for="dt in dateList"
+              :key="dt.view"
+              cols="4"
+            >
               <h2>
-                {{ dt.view }}{{ aggregationDateToSummaryMoney(dt.value) }}
+                {{ dt.view }}{{ dt.money }}{{ dt.names }}
               </h2>
             </v-col>
           </v-row>
@@ -156,10 +171,12 @@ export default {
     tabSummaryOneDayMoney () {
       return (tab) => {
         let result = 0
+        const names = []
         this.timeMoneys[tab].forEach((item) => {
+          names.push(item.name)
           result += item.oneDayMoney()
         })
-        return result
+        return { result, names }
       }
     },
     tabIndex () {
@@ -186,7 +203,7 @@ export default {
           })
           .map((item) => {
             // TODO 固定費の考慮を入れないと動かない。2021/08/20
-            const money = this.tabSummaryOneDayMoney(item.value)
+            const money = this.tabSummaryOneDayMoney(item.value).result
             console.log('■' + money)
             return this.timeCalcList(money, item.value)
           })
@@ -214,9 +231,13 @@ export default {
       let date = this.currentDate
       const list = []
       for (let i = 0; i < 365; i++) {
+        const { result, names } = this.aggregationDateToSummaryMoney(date)
+        console.log(result)
         list.push({
           view: dayjs(date).format('YYYY/MM/DD(dd)'),
           value: date,
+          money: result,
+          names
         })
         date = dayjs(date).add(1, 'day')
       }
@@ -251,16 +272,36 @@ export default {
       const holiday = this.tabSummaryOneDayMoney(TabStatus.Holiday)
       const objIncome = this.periodCalc(TabStatus.Income)
       const objFixedCost = this.periodCalc(TabStatus.FixedCost)
+
+      const nameConcat = (fixed, income) => {
+        let names = []
+        if (fixed && fixed.names.length > 0) {
+          names = names.concat(fixed.names)
+        }
+        if (income && income.names.length > 0) {
+          names = names.concat(income.names)
+        }
+        return names
+      }
+      /**
+      * 集計
+       */
       const calc = (day, pDate) => {
         const date = pDate.format('YYYY/MM/DD')
         let result = 0
         // 週単位
-        result += objFixedCost[CycleStatus.Week.day + '-' + day] || 0
-        result += objIncome[CycleStatus.Week.day + '-' + day] || 0
+        const weekly = () => {
+          let result = 0
+          const key = CycleStatus.Week.day + '-' + day
+          result += objFixedCost.result[key] || 0
+          result += objIncome.result[key] || 0
+          const names = nameConcat(objFixedCost[key], objIncome[key])
+          return { result, names }
+        }
         // 月単位
-        const endMonth = pDate.endOf('month').format('YYYY/MM/DD')
-        const firstMonth = pDate.startOf('month').format('YYYY/MM/DD')
         const month = (status) => {
+          const endMonth = pDate.endOf('month').format('YYYY/MM/DD')
+          const firstMonth = pDate.startOf('month').format('YYYY/MM/DD')
           let result = 0
           let data = null
           if (date == firstMonth) {
@@ -272,44 +313,84 @@ export default {
             const m = +pDate.format('M')
             data = m % 2
           }
-          result += objIncome[status.day + '-' + data] || 0
-          result += objFixedCost[status.day + '-' + data] || 0
-          return result
+          const key = status.day + '-' + data
+          result += objIncome.result[key] || 0
+          result += objFixedCost.result[key] || 0
+
+          const names = nameConcat(objFixedCost[key], objIncome[key])
+          return { result, names }
         }
-        result += month(CycleStatus.Month)
-        result += month(CycleStatus.TwoMonth)
         // 半年
-        if (
-          halfYears.filter((item) => {
-            return item == date
-          }).length != 0
-        ) {
-          result += objIncome[CycleStatus.HalfYear.day + '-' + 1] || 0
-          result += objFixedCost[CycleStatus.HalfYear.day + '-' + 1] || 0
+        const halfYear = () => {
+          let result = 0
+          let names = []
+          if (
+            halfYears.filter((item) => {
+              return item == date
+            }).length != 0
+          ) {
+            const key = CycleStatus.HalfYear.day + '-' + 1
+            result += objIncome.result[key] || 0
+            result += objFixedCost.result[key] || 0
+            names = nameConcat(objFixedCost[key], objIncome[key])
+          }
+          return { result, names }
         }
+
         // １年
-        if (
-          years.filter((item) => {
-            return item == date
-          }).length != 0
-        ) {
-          result += objIncome[CycleStatus.Year.day + '-' + 1] || 0
-          result += objFixedCost[CycleStatus.Year.day + '-' + 1] || 0
+        const year = () => {
+          let result = 0
+          let names = []
+          if (
+            years.filter((item) => {
+              return item == date
+            }).length != 0
+          ) {
+            const key = CycleStatus.Year.day + '-' + 1
+            result += objIncome.result[key] || 0
+            result += objFixedCost.result[key] || 0
+            names = nameConcat(objFixedCost[key], objIncome[key])
+          }
+          return { result, names }
         }
-        return result
+
+        // 結果取得
+        const list = [weekly(),
+          month(CycleStatus.Month),
+          month(CycleStatus.TwoMonth),
+          halfYear(),
+          year()]
+
+        const names = list.map(item => {
+          return item.names.filter(val => { return val && val.length > 0 }).join(',')
+        }).filter(item => { return item != '' }).join(',')
+        //        result += list.reduce((p, r) => { return p + r.result }, 0)
+        result = list.reduce((prev, cur) => {
+          return cur.result + prev
+        }, 0)
+        // result += weekly()
+        // result += month(CycleStatus.Month)
+        // result += month(CycleStatus.TwoMonth)
+        // result += halfYear()
+        // result += year()
+
+        return { result, names }
       }
+
+      /**
+      *   戻り値処理
+       */
       return (baseDate) => {
         const day = +dayjs(baseDate).day()
         let result = 0
         if (day == 0 || day == 6) {
-          result = work
+          result = holiday.result
         } else {
-          result = holiday
+          result = work.result
         }
-        result += calc(day, dayjs(baseDate))
-        // result += objFixedCost[CycleStatus.Week.day + '-' + day] || 0
-        // result += objIncome[CycleStatus.Week.day + '-' + day] || 0
-        return result
+        const obj = calc(day, dayjs(baseDate))
+        result += obj.result
+        return { result, names: obj.names }
       }
     },
   },
@@ -323,18 +404,19 @@ export default {
 
       // TAB毎の集計
       const result = {}
+      const names = []
       this.timeMoneys[status].forEach((item) => {
         const key = item.day + '-' + item.cycle.start
         if (!result[key]) {
           result[key] = 0
         }
         result[key] += item.pay()
-        console.log(key + '|' + item.money + '円')
+        names.push(item.name)
       })
-      return result
+      return { result, names }
     },
     total (value) {
-      return getComma(this.tabSummaryOneDayMoney(value))
+      return getComma(this.tabSummaryOneDayMoney(value).result)
     },
     timeCalcList (money, tabStatus) {
       // TODO 遅いと思われるので改善が必要。
