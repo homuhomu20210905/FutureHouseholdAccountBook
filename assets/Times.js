@@ -76,12 +76,12 @@ const TimeLine = (name, cycle, money, status) => {
 }
 // const timePattern = [1, 7, 30, 180, 365]
 const timePattern = []
-timePattern.push(new TimeLine('1日', CycleStatus.One))
-timePattern.push(new TimeLine('1週間', CycleStatus.Week))
-timePattern.push(new TimeLine('1ヶ月', CycleStatus.Month))
-timePattern.push(new TimeLine('2ヶ月', CycleStatus.TwoMonth))
-timePattern.push(new TimeLine('半年', CycleStatus.HalfYear))
-timePattern.push(new TimeLine('1年', CycleStatus.Year))
+timePattern.push(TimeLine('1日', CycleStatus.One))
+timePattern.push(TimeLine('1週間', CycleStatus.Week))
+timePattern.push(TimeLine('1ヶ月', CycleStatus.Month))
+timePattern.push(TimeLine('2ヶ月', CycleStatus.TwoMonth))
+timePattern.push(TimeLine('半年', CycleStatus.HalfYear))
+timePattern.push(TimeLine('1年', CycleStatus.Year))
 
 /**
  * タブ情報
@@ -109,13 +109,13 @@ const TabStatus = {
  */
 const createTabMenu = () => {
   const tabInfos = []
-  tabInfos.push(new TabInfo('平日', TabStatus.Work, CycleStatus.One))
-  tabInfos.push(new TabInfo('休日', TabStatus.Holiday, CycleStatus.One))
-  tabInfos.push(new TabInfo('収入', TabStatus.Income, CycleStatus.Any))
-  tabInfos.push(new TabInfo('固定費', TabStatus.FixedCost, CycleStatus.Any))
-  tabInfos.push(new TabInfo('集計', TabStatus.All, CycleStatus.Any))
+  tabInfos.push(TabInfo('平日', TabStatus.Work, CycleStatus.One))
+  tabInfos.push(TabInfo('休日', TabStatus.Holiday, CycleStatus.One))
+  tabInfos.push(TabInfo('収入', TabStatus.Income, CycleStatus.Any))
+  tabInfos.push(TabInfo('固定費', TabStatus.FixedCost, CycleStatus.Any))
+  tabInfos.push(TabInfo('集計', TabStatus.All, CycleStatus.Any))
   tabInfos.push(
-    new TabInfo('カレンダー', TabStatus.Calendar, CycleStatus.Other)
+    TabInfo('カレンダー', TabStatus.Calendar, CycleStatus.Other)
   )
   return tabInfos
 }
@@ -153,7 +153,7 @@ const timeCount = (status, days) => {
   return days
 }
 
-export {
+export default {
   CycleStatus,
   createTabMenu,
   timeCount,

@@ -11,9 +11,6 @@
   "PeriodSelect": {
     "description": "Auto imported from components/PeriodSelect.vue"
   },
-  "Times": {
-    "description": "Auto imported from components/Times.js"
-  },
   "TotalMoney": {
     "description": "Auto imported from components/TotalMoney.vue"
   },

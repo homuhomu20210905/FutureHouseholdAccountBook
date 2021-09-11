@@ -1,5 +1,8 @@
 <template>
-  <v-card class="grey darken-3" outlined>
+  <v-card
+    class="grey darken-3"
+    outlined
+  >
     <v-row>
       <v-col cols="3">
         <v-text-field
@@ -7,7 +10,7 @@
           label="用途"
           solo
           outlined
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="3">
         <v-text-field
@@ -17,7 +20,7 @@
           outlined
           suffix="円"
           @change="setTimeInfo"
-        ></v-text-field>
+        />
       </v-col>
       <v-col cols="3">
         <v-select
@@ -29,8 +32,7 @@
           solo
           outlined
           @change="setTimeInfo"
-        >
-        </v-select>
+        />
       </v-col>
       <v-col cols="3">
         <period-select
@@ -43,8 +45,15 @@
     <v-row>
       <v-col cols="12">
         <v-row>
-          <v-col v-for="(time, index) in timePattern" :key="index" cols="2">
-            <total-money :name="time.name" :money="timeCalc[index]" />
+          <v-col
+            v-for="(time, index) in timePattern"
+            :key="index"
+            cols="2"
+          >
+            <total-money
+              :name="time.name"
+              :money="timeCalc[index]"
+            />
           </v-col>
         </v-row>
       </v-col>
@@ -53,10 +62,10 @@
 </template>
 
 <script>
-import { CycleStatus, timePattern, PayStatus } from './Times'
+import TImes from '../assets/Times'
 import TotalMoney from '../components/TotalMoney.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
-
+const { CycleStatus, timePattern, PayStatus } = TImes
 const OtherTime = (name, day, cycle, money, status) => {
   return {
     name,
@@ -96,7 +105,7 @@ export default {
   },
   data () {
     return {
-      info: new OtherTime('', 7, CycleStatus.Week, 0, this.status),
+      info: OtherTime('', 7, CycleStatus.Week, 0, this.status),
       timePattern,
     }
   },

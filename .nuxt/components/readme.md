@@ -10,7 +10,6 @@ You can directly use them in pages and other components without the need to impo
 - `<NuxtLogo>` | `<nuxt-logo>` (components/NuxtLogo.vue)
 - `<OtherNumber>` | `<other-number>` (components/OtherNumber.vue)
 - `<PeriodSelect>` | `<period-select>` (components/PeriodSelect.vue)
-- `<Times>` | `<times>` (components/Times.js)
 - `<TotalMoney>` | `<total-money>` (components/TotalMoney.vue)
 - `<Tutorial>` | `<tutorial>` (components/Tutorial.vue)
 - `<VuetifyLogo>` | `<vuetify-logo>` (components/VuetifyLogo.vue)

@@ -1,5 +1,8 @@
 <template>
-  <v-card class="grey darken-3" outlined>
+  <v-card
+    class="grey darken-3"
+    outlined
+  >
     <v-row>
       <v-col cols="12">
         <v-select
@@ -11,16 +14,15 @@
           solo
           outlined
           @change="setTimeInfo"
-        >
-        </v-select>
+        />
       </v-col>
     </v-row>
   </v-card>
 </template>
 
 <script>
-import { CycleStatus, } from './Times'
-
+import Times from '../assets/Times'
+const { CycleStatus, } = Times
 const weekdays = ['日', '月', '火', '水', '木', '金', '土'].map(
   (name, index) => {
     return { name, value: index }

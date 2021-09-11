@@ -128,7 +128,13 @@
 </template>
 
 <script>
-import {
+import Times from '../assets/Times'
+import Number from '../components/Number.vue'
+import OtherNumber from '../components/OtherNumber.vue'
+import TimelyMoney from '../components/timelyMoney.vue'
+import daysjsja from '../components/daysjs-ja'
+const { dayjs } = daysjsja
+const {
   createTabMenu,
   timeCount,
   getComma,
@@ -136,11 +142,7 @@ import {
   TimeLine,
   TabStatus,
   CycleStatus,
-} from '../components/Times'
-import Number from '../components/Number.vue'
-import OtherNumber from '../components/OtherNumber.vue'
-import TimelyMoney from '../components/timelyMoney.vue'
-import { dayjs } from '../components/daysjs-ja'
+} = Times
 export default {
   components: {
     Number,
@@ -154,7 +156,7 @@ export default {
       timeMoneys[item.value] = []
       for (let i = 0; i < 10; i++) {
         timeMoneys[item.value].push(
-          new TimeLine('', Object.assign({}, item.cycle), 0)
+          TimeLine('', Object.assign({}, item.cycle), 0)
         )
       }
     })

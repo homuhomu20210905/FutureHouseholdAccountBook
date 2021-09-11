@@ -1,7 +1,14 @@
 <template>
-  <v-card class="grey darken-3" outlined>
+  <v-card
+    class="grey darken-3"
+    outlined
+  >
     <v-row>
-      <v-col v-for="(item, index) in moneyList" :key="index" cols="2">
+      <v-col
+        v-for="(item, index) in moneyList"
+        :key="index"
+        cols="2"
+      >
         {{ item.name }} {{ item.value }}円
       </v-col>
     </v-row>
@@ -9,7 +16,8 @@
 </template>
 
 <script>
-import { timePattern } from '../components/Times'
+import Times from '../assets/Times'
+const { timePattern } = Times
 export default {
   props: {
     moneys: {

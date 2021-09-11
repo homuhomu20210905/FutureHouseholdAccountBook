@@ -43,8 +43,9 @@
 </template>
 
 <script>
-import { timeCount, timePattern } from '../components/Times'
+import Times from '../assets/Times'
 import totalMoney from './TotalMoney.vue'
+const { timeCount, timePattern } = Times
 export default {
   components: {
     totalMoney

@@ -54,6 +54,7 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    'nuxt-vite'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
