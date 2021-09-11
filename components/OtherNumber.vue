@@ -10,11 +10,12 @@
           label="用途"
           solo
           outlined
+          @change="changePeriod"
         />
       </v-col>
       <v-col cols="3">
         <v-text-field
-          v-model="info.money"
+          v-model.number="info.money"
           label="お金"
           solo
           outlined
@@ -37,7 +38,7 @@
       <v-col cols="3">
         <period-select
           :day="info.day"
-          :start="info.cycle.start"
+          :start="+info.cycle.start"
           @period-select="changePeriod($event)"
         />
       </v-col>
@@ -102,10 +103,25 @@ export default {
       type: Number,
       default: 0,
     },
+    name: {
+      type: String,
+      default: ''
+    },
+    value: {
+      type: Number,
+      default: 0
+    },
+    cStart: {
+      type: Number,
+      default: 0
+    }
   },
   data () {
+    const cycle = Object.assign({}, CycleStatus.Week)
+    cycle.start = this.cStart
+    const info = Object.assign({}, OtherTime(this.name, 7, Object.assign({}, cycle), this.value, this.status))
     return {
-      info: OtherTime('', 7, CycleStatus.Week, 0, this.status),
+      info: info,
       timePattern,
     }
   },
@@ -125,13 +141,12 @@ export default {
   },
   methods: {
     setTimeInfo () {
-      console.log(JSON.stringify(this.info, null, 3))
+      this.info.money = +this.info.money
       this.$emit('change-value', this.info)
     },
     changePeriod ($event) {
-      if ($event) {
-        this.info.cycle.start = $event
-      }
+      this.info.cycle.start = $event
+      console.log('change period...' + $event)
       this.setTimeInfo()
     },
   },

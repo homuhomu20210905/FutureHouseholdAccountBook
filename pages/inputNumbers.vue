@@ -36,7 +36,9 @@
                 >
                   <number
                     :tab="tab"
-                    @change-value="moneyInfo.money = $event"
+                    :name="moneyInfo.name"
+                    :money="moneyInfo.money"
+                    @change-value="setNumber(item.value, mIndex, $event)"
                   />
                 </v-col>
               </v-row>
@@ -64,6 +66,9 @@
                 <other-number
                   :tab="tab"
                   :status="1"
+                  :name="moneyInfo.name"
+                  :value="moneyInfo.money"
+                  :c-start="+moneyInfo.cycle.start"
                   @change-value="otherNumberSet(item.value, mIndex, $event)"
                 />
               </v-col>
@@ -83,6 +88,9 @@
                   <other-number
                     :tab="tab"
                     :status="0"
+                    :name="moneyInfo.name"
+                    :value="moneyInfo.money"
+                    :c-start="+moneyInfo.cycle.start"
                     @change-value="otherNumberSet(item.value, mIndex, $event)"
                   />
                 </v-col>
@@ -156,7 +164,7 @@ export default {
       timeMoneys[item.value] = []
       for (let i = 0; i < 10; i++) {
         timeMoneys[item.value].push(
-          TimeLine('', Object.assign({}, item.cycle), 0)
+          Object.assign({}, TimeLine('', Object.assign({}, item.cycle), 0))
         )
       }
     })
@@ -175,7 +183,7 @@ export default {
         let result = 0
         const names = []
         this.timeMoneys[tab].forEach((item) => {
-          names.push(item.name)
+          item.name && names.push(item.name)
           result += item.oneDayMoney()
         })
         return { result, names }
@@ -232,9 +240,8 @@ export default {
     dateList () {
       let date = this.currentDate
       const list = []
-      for (let i = 0; i < 365; i++) {
+      for (let i = 0; i < this.yearDays; i++) {
         const { result, names } = this.aggregationDateToSummaryMoney(date)
-        console.log(result)
         list.push({
           view: dayjs(date).format('YYYY/MM/DD(dd)'),
           value: date,
@@ -245,13 +252,19 @@ export default {
       }
       return list
     },
+    endDate () {
+      return dayjs(this.currentDate).add(1, 'year')
+    },
+    yearDays () {
+      return +this.endDate.diff(this.currentDate, 'day')
+    },
     // パラメータの日付によって、期間ごとの金額を返す
     // 日次〜年次までの必要な金額を加算して返す。(カレンダー用)
     aggregationDateToSummaryMoney () {
       /** 日によって金額を算出する */
       /** 週単位以降の金額は期間を元に算出する */
-      const END_DATE = dayjs(this.currentDate).add(1, 'year')
-      const totalDay = END_DATE.diff(this.currentDate, 'day')
+      const END_DATE = this.endDate
+      const totalDay = this.yearDays
       const halfYears = []
       for (
         let i = parseInt(totalDay / 2);
@@ -263,11 +276,9 @@ export default {
         )
       }
       const years = []
-      years.push(
-        dayjs(this.currentDate)
-          .add(1, 'year')
-          .add(-1, 'day')
-          .format('YYYY/MM/DD')
+      years.push(END_DATE
+        .add(-1, 'day')
+        .format('YYYY/MM/DD')
       )
 
       const work = this.tabSummaryOneDayMoney(TabStatus.Work)
@@ -275,16 +286,38 @@ export default {
       const objIncome = this.periodCalc(TabStatus.Income)
       const objFixedCost = this.periodCalc(TabStatus.FixedCost)
 
-      const nameConcat = (fixed, income) => {
+      // const nameConcat = (fixed, income) => {
+      //   let names = []
+      //   if (fixed && fixed.names.length > 0) {
+      //     names = names.concat(fixed.names)
+      //   }
+      //   if (income && income.names.length > 0) {
+      //     names = names.concat(income.names)
+      //   }
+      //   const values = names.filter(item => item.length != 0)
+      //   if (values.length) {
+      //     console.log(values)
+      //   }
+      //   return { names, values }
+      // }
+
+      const objGet = (key, objFixedCost, objIncome) => {
+        let result = 0
+        const fix = objFixedCost.result[key]
+        const inc = objIncome.result[key]
         let names = []
-        if (fixed && fixed.names.length > 0) {
-          names = names.concat(fixed.names)
+        if (fix) {
+          result += fix.money || 0
+          names = names.concat(fix.names)
         }
-        if (income && income.names.length > 0) {
-          names = names.concat(income.names)
+        if (inc) {
+          result += inc.money || 0
+          names = names.concat(inc.names)
         }
-        return names
+        names = names.filter(item => item.length != 0)
+        return { result, names }
       }
+
       /**
       * 集計
        */
@@ -293,18 +326,16 @@ export default {
         let result = 0
         // 週単位
         const weekly = () => {
-          let result = 0
           const key = CycleStatus.Week.day + '-' + day
-          result += objFixedCost.result[key] || 0
-          result += objIncome.result[key] || 0
-          const names = nameConcat(objFixedCost[key], objIncome[key])
-          return { result, names }
+          // result += objFixedCost.result[key].money || 0
+          // result += objIncome.result[key].money || 0
+          // const names = nameConcat(objFixedCost.result[key].names, objIncome.result[key].names)
+          return objGet(key, objFixedCost, objIncome)
         }
         // 月単位
         const month = (status) => {
           const endMonth = pDate.endOf('month').format('YYYY/MM/DD')
           const firstMonth = pDate.startOf('month').format('YYYY/MM/DD')
-          let result = 0
           let data = null
           if (date == firstMonth) {
             data = 1
@@ -316,11 +347,11 @@ export default {
             data = m % 2
           }
           const key = status.day + '-' + data
-          result += objIncome.result[key] || 0
-          result += objFixedCost.result[key] || 0
+          // result += objIncome.result[key] || 0
+          // result += objFixedCost.result[key] || 0
 
-          const names = nameConcat(objFixedCost[key], objIncome[key])
-          return { result, names }
+          // const names = nameConcat(objFixedCost, objIncome)
+          return objGet(key, objFixedCost, objIncome)
         }
         // 半年
         const halfYear = () => {
@@ -332,9 +363,11 @@ export default {
             }).length != 0
           ) {
             const key = CycleStatus.HalfYear.day + '-' + 1
-            result += objIncome.result[key] || 0
-            result += objFixedCost.result[key] || 0
-            names = nameConcat(objFixedCost[key], objIncome[key])
+            // result += objIncome.result[key] || 0
+            // result += objFixedCost.result[key] || 0
+            const obj = objGet(key, objFixedCost, objIncome)
+            result = obj.result
+            names = obj.names
           }
           return { result, names }
         }
@@ -349,9 +382,11 @@ export default {
             }).length != 0
           ) {
             const key = CycleStatus.Year.day + '-' + 1
-            result += objIncome.result[key] || 0
-            result += objFixedCost.result[key] || 0
-            names = nameConcat(objFixedCost[key], objIncome[key])
+            // result += objIncome.result[key] || 0
+            // result += objFixedCost.result[key] || 0
+            const obj = objGet(key, objFixedCost, objIncome)
+            result = obj.result
+            names = obj.names
           }
           return { result, names }
         }
@@ -366,15 +401,11 @@ export default {
         const names = list.map(item => {
           return item.names.filter(val => { return val && val.length > 0 }).join(',')
         }).filter(item => { return item != '' }).join(',')
-        //        result += list.reduce((p, r) => { return p + r.result }, 0)
+
+        // 合計金額
         result = list.reduce((prev, cur) => {
           return cur.result + prev
         }, 0)
-        // result += weekly()
-        // result += month(CycleStatus.Month)
-        // result += month(CycleStatus.TwoMonth)
-        // result += halfYear()
-        // result += year()
 
         return { result, names }
       }
@@ -383,16 +414,21 @@ export default {
       *   戻り値処理
        */
       return (baseDate) => {
-        const day = +dayjs(baseDate).day()
+        const calcDate = dayjs(baseDate)
+        const day = +calcDate.day()
         let result = 0
+        let names = []
         if (day == 0 || day == 6) {
           result = holiday.result
+          names = names.concat(holiday.names)
         } else {
           result = work.result
+          names = names.concat(work.names)
         }
-        const obj = calc(day, dayjs(baseDate))
+        const obj = calc(day, calcDate)
         result += obj.result
-        return { result, names: obj.names }
+        names = obj.names.concat(names)
+        return { result, names }
       }
     },
   },
@@ -406,16 +442,18 @@ export default {
 
       // TAB毎の集計
       const result = {}
-      const names = []
       this.timeMoneys[status].forEach((item) => {
         const key = item.day + '-' + item.cycle.start
         if (!result[key]) {
-          result[key] = 0
+          result[key] = {
+            money: 0,
+            names: []
+          }
         }
-        result[key] += item.pay()
-        names.push(item.name)
+        result[key].money += item.pay()
+        item.name && result[key].names.push(item.name)
       })
-      return { result, names }
+      return { result }
     },
     total (value) {
       return getComma(this.tabSummaryOneDayMoney(value).result)
@@ -428,11 +466,21 @@ export default {
       return list
     },
     otherNumberSet (value, index, $event) {
+      console.log('other-select...')
+      console.log($event.cycle.start)
+      this.timeMoneys[value][index].name = $event.name
       this.timeMoneys[value][index].money = $event.money
       this.timeMoneys[value][index].day = $event.day
+      this.timeMoneys[value][index].status = $event.status
       this.timeMoneys[value][index].cycle.value = $event.cycle.value
       this.timeMoneys[value][index].cycle.start = $event.cycle.start
     },
+    setNumber (value, index, $event) {
+      console.log('number value set...')
+      console.log($event)
+      this.timeMoneys[value][index].name = $event.name
+      this.timeMoneys[value][index].money = $event.value
+    }
   },
 }
 </script>

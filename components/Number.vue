@@ -10,16 +10,17 @@
           label="用途"
           solo
           outlined
+          @blur="setMoney"
         />
       </v-col>
       <v-col cols="6">
         <v-text-field
-          v-model="value"
+          v-model.number="value"
           label="お金"
           solo
           outlined
           suffix="円"
-          @change="setMoney"
+          @bulr="setMoney"
         />
       </v-col>
     </v-row>
@@ -66,8 +67,8 @@ export default {
   },
   data () {
     return {
-      useName: '',
-      value: 0,
+      useName: this.name,
+      value: this.money,
       timePattern
     }
   },
@@ -82,8 +83,10 @@ export default {
   },
   methods: {
     setMoney () {
-      console.log('set money called!!' + this.value)
-      this.$emit('change-value', +this.value)
+      const info = { value: +this.value, name: this.useName }
+      console.log('setMoney call...')
+      console.log(info)
+      this.$emit('change-value', info)
     }
   }
 }

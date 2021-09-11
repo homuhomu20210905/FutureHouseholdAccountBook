@@ -80,13 +80,14 @@ export default {
     if (this.periods.length > 0) {
       this.value = this.periods[0].value
     }
+    this.setTimeInfo()
   },
   methods: {
     setTimeInfo () {
       if (this.periods.filter((item) => item.value == this.value).length == 0) {
         this.value = this.periods[0].value
       }
-      console.log('peirod-select' + this.value)
+      console.log('peirod-select emit...' + this.value)
       this.$emit('period-select', this.value)
     },
   },
