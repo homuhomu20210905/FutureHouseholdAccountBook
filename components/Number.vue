@@ -4,7 +4,11 @@
     outlined
   >
     <v-row>
-      <v-col cols="6">
+      <v-col
+        cols="12"
+        md="12"
+        xs="12"
+      >
         <v-text-field
           v-model="useName"
           label="用途"
@@ -13,7 +17,11 @@
           @blur="setMoney"
         />
       </v-col>
-      <v-col cols="6">
+      <v-col
+        cols="12"
+        md="12"
+        xs="12"
+      >
         <v-text-field
           v-model.number="value"
           label="お金"
@@ -25,12 +33,18 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12">
+      <v-col
+        cols="12"
+        md="12"
+        xs="12"
+      >
         <v-row>
           <v-col
             v-for="(time, index) in timePattern"
             :key="time.name"
-            cols="2"
+            cols="12"
+            md="6"
+            xs="6"
           >
             <total-money
               :name="time.name"

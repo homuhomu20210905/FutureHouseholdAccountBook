@@ -4,7 +4,11 @@
     outlined
   >
     <v-row>
-      <v-col cols="3">
+      <v-col
+        lg="3"
+        md="6"
+        sm="12"
+      >
         <v-text-field
           v-model="info.name"
           label="用途"
@@ -13,7 +17,11 @@
           @change="changePeriod"
         />
       </v-col>
-      <v-col cols="3">
+      <v-col
+        lg="3"
+        md="6"
+        sm="12"
+      >
         <v-text-field
           v-model.number="info.money"
           label="お金"
@@ -23,7 +31,11 @@
           @change="setTimeInfo"
         />
       </v-col>
-      <v-col cols="3">
+      <v-col
+        lg="3"
+        md="6"
+        sm="12"
+      >
         <v-select
           v-model="info.day"
           :items="timeList"
@@ -35,7 +47,11 @@
           @change="setTimeInfo"
         />
       </v-col>
-      <v-col cols="3">
+      <v-col
+        lg="3"
+        md="6"
+        sm="12"
+      >
         <period-select
           :day="info.day"
           :start="+info.cycle.start"
@@ -44,12 +60,18 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12">
+      <v-col
+        cols="12"
+        md="12"
+        sm="12"
+      >
         <v-row>
           <v-col
             v-for="(time, index) in timePattern"
             :key="index"
-            cols="2"
+            cols="12"
+            md="6"
+            sm="6"
           >
             <total-money
               :name="time.name"
@@ -66,7 +88,7 @@
 import TImes from '../logic/Times'
 import TotalMoney from '../components/TotalMoney.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
-const { CycleStatus, timePattern, PayStatus, TimeLine } = TImes
+const { CycleStatus, timePattern, TimeLine } = TImes
 // const OtherTime = (name, day, cycle, money, status) => {
 //   return {
 //     name,

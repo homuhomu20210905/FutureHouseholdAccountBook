@@ -52,12 +52,6 @@ const TimeLine = (name, cycle, money, status) => {
   return {
     name,
     day,
-    // get day () {
-    //   return this.cycle.day
-    // },
-    // set day (day_) {
-    //   this.cycle.day = day_
-    // },
     cycle,
     money,
     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,

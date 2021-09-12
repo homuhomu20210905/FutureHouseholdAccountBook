@@ -1,18 +1,19 @@
 <template>
-  <v-card
-    class="grey darken-3"
-    outlined
-  >
-    <v-row>
-      <v-col
-        v-for="(item, index) in moneyList"
-        :key="index"
-        cols="2"
+  <v-row>
+    <v-col
+      v-for="(item) in moneyList"
+      :key="item.name"
+      cols="6"
+      xs="6"
+    >
+      <v-card
+        class="grey darken-3"
+        outlined
       >
-        {{ item.name }} {{ item.value }}円
-      </v-col>
-    </v-row>
-  </v-card>
+        <h2>{{ item.name }} {{ item.value }}円</h2>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>

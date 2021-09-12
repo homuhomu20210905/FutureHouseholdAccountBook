@@ -33,6 +33,7 @@
                   v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
                   :key="item.value + moneyInfo.name + mIndex"
                   cols="12"
+                  md="6"
                 >
                   <number
                     :tab="tab"
@@ -62,6 +63,8 @@
                 v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
                 :key="item.value + moneyInfo.name + mIndex"
                 cols="12"
+                md="12"
+                sm="12"
               >
                 <other-number
                   :tab="tab"
@@ -106,17 +109,30 @@
               :key="totalItem.name"
               cols="12"
             >
-              <h2 v-if="totalItem.cycle.value != 9">
-                {{ totalItem.name }}
-                <timely-money
-                  :moneys="allSummaryOneDayMoney(totalItem.value)"
-                />
-              </h2>
+              <v-row>
+                <v-col
+                  cols="2"
+                >
+                  <h2 v-if="totalItem.cycle.value != 9">
+                    {{ totalItem.name }}
+                  </h2>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col
+                  cols="12"
+                  md="8"
+                  sm="6"
+                >
+                  <timely-money
+                    :moneys="allSummaryOneDayMoney(totalItem.value)"
+                  />
+                </v-col>
+              </v-row>
             </v-col>
           </v-row>
         </div>
         <!-- カレンダー画面 -->
-        <!-- TODO 集計データをここに渡せれば金額を入れ込むことができるはず。。。。 -->
         <div v-if="item.value == TabStatus.Calendar">
           <v-row>
             <v-col
@@ -183,7 +199,8 @@ export default {
         let result = 0
         const names = []
         this.timeMoneys[tab].forEach((item) => {
-          item.name && names.push(item.name)
+          // TODO 名称に単価を入れる
+          item.name && names.push(item.name + '(' + item.oneDayMoney() + '円)')
           result += item.oneDayMoney()
         })
         return { result, names }
@@ -309,22 +326,6 @@ export default {
           const key = status.day + '-' + data
           return objGet(key, objFixedCost, objIncome)
         }
-        // 半年
-        const halfYear = () => {
-          const result = 0
-          const names = []
-          const halfYears = []
-          for (
-            let i = Math.floor(totalDay / 2);
-            i < totalDay;
-            i += Math.floor(totalDay / 2)
-          ) {
-            halfYears.push(
-              dayjs(this.currentDate).add(i, 'day').format('YYYY/MM/DD')
-            )
-          }
-          return longPeriod(halfYears, CycleStatus.HalfYear)
-        }
 
         const longPeriod = (periods, cycle) => {
           let result = 0
@@ -342,6 +343,22 @@ export default {
           }
           return { result, names }
         }
+
+        // 半年
+        const halfYear = () => {
+          const halfYears = []
+          for (
+            let i = Math.floor(totalDay / 2);
+            i < totalDay;
+            i += Math.floor(totalDay / 2)
+          ) {
+            halfYears.push(
+              dayjs(this.currentDate).add(i, 'day').format('YYYY/MM/DD')
+            )
+          }
+          return longPeriod(halfYears, CycleStatus.HalfYear)
+        }
+
         // １年
         const year = () => {
           const years = []
@@ -360,8 +377,9 @@ export default {
           year()]
 
         const names = list.map(item => {
-          return item.names.filter(val => { return val && val.length > 0 }).join(',')
-        }).filter(item => { return item != '' }).join(',')
+          const values = item.names.filter(val => { return val && val.length > 0 })
+          return values.join(',')
+        }).filter(item => { return item != '' })
 
         // 合計金額
         result = list.reduce((prev, cur) => {
@@ -412,7 +430,8 @@ export default {
           }
         }
         result[key].money += item.pay()
-        item.name && result[key].names.push(item.name)
+        // 名称に単価を入れる TODO
+        item.name && result[key].names.push(item.name + '(' + item.pay() + '円)')
       })
       return { result }
     },
@@ -420,11 +439,9 @@ export default {
       return getComma(this.tabSummaryOneDayMoney(value).result)
     },
     timeCalcList (money, tabStatus) {
-      // TODO 遅いと思われるので改善が必要。
-      const list = timePattern.map((item) => {
+      return timePattern.map((item) => {
         return Math.round(money * timeCount(tabStatus, item.day))
       })
-      return list
     },
     otherNumberSet (value, index, $event) {
       console.log('other-select...')
