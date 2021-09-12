@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>棒グラフと線グラフ</h1>
-    <chart></chart>
+    <chart />
   </div>
 </template>
 

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Times from '../assets/Times'
+import Times from '../logic/Times'
 const { CycleStatus, } = Times
 const weekdays = ['日', '月', '火', '水', '木', '金', '土'].map(
   (name, index) => {

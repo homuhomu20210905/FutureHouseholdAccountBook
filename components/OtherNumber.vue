@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import TImes from '../assets/Times'
+import TImes from '../logic/Times'
 import TotalMoney from '../components/TotalMoney.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
 const { CycleStatus, timePattern, PayStatus } = TImes

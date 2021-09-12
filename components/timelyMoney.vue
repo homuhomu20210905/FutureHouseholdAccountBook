@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Times from '../assets/Times'
+import Times from '../logic/Times'
 const { timePattern } = Times
 export default {
   props: {

@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import Times from '../assets/Times'
+import Times from '../logic/Times'
 import totalMoney from './TotalMoney.vue'
 const { timeCount, timePattern } = Times
 export default {

@@ -136,7 +136,7 @@
 </template>
 
 <script>
-import Times from '../assets/Times'
+import Times from '../logic/Times'
 import Number from '../components/Number.vue'
 import OtherNumber from '../components/OtherNumber.vue'
 import TimelyMoney from '../components/timelyMoney.vue'
@@ -199,7 +199,7 @@ export default {
       list.push(TabStatus.Calendar)
       return list[this.tab]
     },
-    // TAB毎の期間毎の合計を求め、配列として返す
+    // TAB毎の期間毎の合計を求め、配列として返す(概算計を返す)
     allSummaryOneDayMoney () {
       return (tab) => {
         if (this.tabIndex != TabStatus.All) {
@@ -209,6 +209,7 @@ export default {
         }
         return this.tabMenus
           .filter((item) => {
+            // tabinfoの値はTabStatus
             return item.value == tab
           })
           .map((item) => {
@@ -219,7 +220,7 @@ export default {
           })
       }
     },
-    // 集計タブ用期間合計算出
+    // 集計タブ用(ALL用)期間合計算出(概算計を返す)
     allOnlySummaryOneDayMoney () {
       const tabList = [
         TabStatus.Work,
@@ -285,21 +286,6 @@ export default {
       const holiday = this.tabSummaryOneDayMoney(TabStatus.Holiday)
       const objIncome = this.periodCalc(TabStatus.Income)
       const objFixedCost = this.periodCalc(TabStatus.FixedCost)
-
-      // const nameConcat = (fixed, income) => {
-      //   let names = []
-      //   if (fixed && fixed.names.length > 0) {
-      //     names = names.concat(fixed.names)
-      //   }
-      //   if (income && income.names.length > 0) {
-      //     names = names.concat(income.names)
-      //   }
-      //   const values = names.filter(item => item.length != 0)
-      //   if (values.length) {
-      //     console.log(values)
-      //   }
-      //   return { names, values }
-      // }
 
       const objGet = (key, objFixedCost, objIncome) => {
         let result = 0
