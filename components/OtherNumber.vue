@@ -66,29 +66,29 @@
 import TImes from '../logic/Times'
 import TotalMoney from '../components/TotalMoney.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
-const { CycleStatus, timePattern, PayStatus } = TImes
-const OtherTime = (name, day, cycle, money, status) => {
-  return {
-    name,
-    day,
-    cycle,
-    money,
-    status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
-    oneDayMoney: function () {
-      const money = this.pay()
-      if (this.day == 1) {
-        return money
-      }
-      return money / this.day
-    },
-    abs: function () {
-      return Math.abs(this.oneDayMoney())
-    },
-    pay: function () {
-      return PayStatus.Income == this.status ? this.money * -1 : this.money
-    },
-  }
-}
+const { CycleStatus, timePattern, PayStatus, TimeLine } = TImes
+// const OtherTime = (name, day, cycle, money, status) => {
+//   return {
+//     name,
+//     day,
+//     cycle,
+//     money,
+//     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
+//     oneDayMoney: function () {
+//       const money = this.pay()
+//       if (this.day == 1) {
+//         return money
+//       }
+//       return money / this.day
+//     },
+//     abs: function () {
+//       return Math.abs(this.oneDayMoney())
+//     },
+//     pay: function () {
+//       return PayStatus.Income == this.status ? this.money * -1 : this.money
+//     },
+//   }
+// }
 export default {
   components: {
     TotalMoney,
@@ -119,7 +119,7 @@ export default {
   data () {
     const cycle = Object.assign({}, CycleStatus.Week)
     cycle.start = this.cStart
-    const info = Object.assign({}, OtherTime(this.name, 7, Object.assign({}, cycle), this.value, this.status))
+    const info = Object.assign({}, TimeLine(this.name, Object.assign({}, cycle), this.value, this.status))
     return {
       info: info,
       timePattern,

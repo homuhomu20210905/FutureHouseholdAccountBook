@@ -31,8 +31,8 @@ const weekdays = ['日', '月', '火', '水', '木', '金', '土'].map(
 const months = ['1日', '月末'].map((name, index) => {
   return { name, value: index + 1 }
 })
-const twoMonths = ['奇数月', '偶数月'].map((name, index) => {
-  return { name, value: index + 1 }
+const twoMonths = ['偶数月', '奇数月'].map((name, index) => {
+  return { name, value: index }
 })
 const dummy = [{ name: '', value: 1 }]
 

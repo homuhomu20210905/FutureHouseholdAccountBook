@@ -48,14 +48,16 @@ const CycleStatus = {
  *  @returns
  */
 const TimeLine = (name, cycle, money, status) => {
+  const day = cycle.day
   return {
     name,
-    get day () {
-      return this.cycle.day
-    },
-    set day (day_) {
-      this.cycle.day = day_
-    },
+    day,
+    // get day () {
+    //   return this.cycle.day
+    // },
+    // set day (day_) {
+    //   this.cycle.day = day_
+    // },
     cycle,
     money,
     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,

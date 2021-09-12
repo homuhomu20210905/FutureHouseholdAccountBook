@@ -264,24 +264,7 @@ export default {
     aggregationDateToSummaryMoney () {
       /** 日によって金額を算出する */
       /** 週単位以降の金額は期間を元に算出する */
-      const END_DATE = this.endDate
-      const totalDay = this.yearDays
-      const halfYears = []
-      for (
-        let i = parseInt(totalDay / 2);
-        i < totalDay;
-        i += parseInt(totalDay / 2)
-      ) {
-        halfYears.push(
-          dayjs(this.currentDate).add(i, 'day').format('YYYY/MM/DD')
-        )
-      }
-      const years = []
-      years.push(END_DATE
-        .add(-1, 'day')
-        .format('YYYY/MM/DD')
-      )
-
+      const totalDay = +this.yearDays
       const work = this.tabSummaryOneDayMoney(TabStatus.Work)
       const holiday = this.tabSummaryOneDayMoney(TabStatus.Holiday)
       const objIncome = this.periodCalc(TabStatus.Income)
@@ -289,18 +272,12 @@ export default {
 
       const objGet = (key, objFixedCost, objIncome) => {
         let result = 0
-        const fix = objFixedCost.result[key]
-        const inc = objIncome.result[key]
+        const list = [objFixedCost, objIncome]
         let names = []
-        if (fix) {
-          result += fix.money || 0
-          names = names.concat(fix.names)
-        }
-        if (inc) {
-          result += inc.money || 0
-          names = names.concat(inc.names)
-        }
-        names = names.filter(item => item.length != 0)
+        list.map(obj => obj.result[key]).filter(cost => cost).forEach(cost => {
+          result += cost.money || 0
+          names = names.concat(cost.names.filter(item => item.length != 0))
+        })
         return { result, names }
       }
 
@@ -313,9 +290,6 @@ export default {
         // 週単位
         const weekly = () => {
           const key = CycleStatus.Week.day + '-' + day
-          // result += objFixedCost.result[key].money || 0
-          // result += objIncome.result[key].money || 0
-          // const names = nameConcat(objFixedCost.result[key].names, objIncome.result[key].names)
           return objGet(key, objFixedCost, objIncome)
         }
         // 月単位
@@ -333,48 +307,49 @@ export default {
             data = m % 2
           }
           const key = status.day + '-' + data
-          // result += objIncome.result[key] || 0
-          // result += objFixedCost.result[key] || 0
-
-          // const names = nameConcat(objFixedCost, objIncome)
           return objGet(key, objFixedCost, objIncome)
         }
         // 半年
         const halfYear = () => {
+          const result = 0
+          const names = []
+          const halfYears = []
+          for (
+            let i = Math.floor(totalDay / 2);
+            i < totalDay;
+            i += Math.floor(totalDay / 2)
+          ) {
+            halfYears.push(
+              dayjs(this.currentDate).add(i, 'day').format('YYYY/MM/DD')
+            )
+          }
+          return longPeriod(halfYears, CycleStatus.HalfYear)
+        }
+
+        const longPeriod = (periods, cycle) => {
           let result = 0
           let names = []
           if (
-            halfYears.filter((item) => {
+            periods.filter((item) => {
               return item == date
             }).length != 0
           ) {
-            const key = CycleStatus.HalfYear.day + '-' + 1
-            // result += objIncome.result[key] || 0
-            // result += objFixedCost.result[key] || 0
+            const key = cycle.day + '-' + 0
             const obj = objGet(key, objFixedCost, objIncome)
             result = obj.result
             names = obj.names
+            console.log('-------------------------------------')
           }
           return { result, names }
         }
-
         // １年
         const year = () => {
-          let result = 0
-          let names = []
-          if (
-            years.filter((item) => {
-              return item == date
-            }).length != 0
-          ) {
-            const key = CycleStatus.Year.day + '-' + 1
-            // result += objIncome.result[key] || 0
-            // result += objFixedCost.result[key] || 0
-            const obj = objGet(key, objFixedCost, objIncome)
-            result = obj.result
-            names = obj.names
-          }
-          return { result, names }
+          const years = []
+          years.push(this.endDate
+            .add(-1, 'day')
+            .format('YYYY/MM/DD')
+          )
+          return longPeriod(years, CycleStatus.Year)
         }
 
         // 結果取得
@@ -413,7 +388,7 @@ export default {
         }
         const obj = calc(day, calcDate)
         result += obj.result
-        names = obj.names.concat(names)
+        names = names.concat(obj.names)
         return { result, names }
       }
     },
