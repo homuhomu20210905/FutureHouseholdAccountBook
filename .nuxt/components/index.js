@@ -1,15 +1,15 @@
 import { wrapFunctional } from './utils'
 
-export { default as Number } from '../../components/Number.vue'
-export { default as NuxtLogo } from '../../components/NuxtLogo.vue'
-export { default as OtherNumber } from '../../components/OtherNumber.vue'
-export { default as PeriodSelect } from '../../components/PeriodSelect.vue'
-export { default as TotalMoney } from '../../components/TotalMoney.vue'
-export { default as Tutorial } from '../../components/Tutorial.vue'
-export { default as VuetifyLogo } from '../../components/VuetifyLogo.vue'
-export { default as DaysjsJa } from '../../components/daysjs-ja.js'
-export { default as Sparkline } from '../../components/sparkline.vue'
-export { default as TimelyMoney } from '../../components/timelyMoney.vue'
-export { default as Topmessage01 } from '../../components/topmessage01.vue'
-export { default as Topmessage02 } from '../../components/topmessage02.vue'
-export { default as Topmessage03 } from '../../components/topmessage03.vue'
+export const Number = import('../../components/Number.vue' /* webpackChunkName: "components/number" */).then(c => wrapFunctional(c.default || c))
+export const NuxtLogo = import('../../components/NuxtLogo.vue' /* webpackChunkName: "components/nuxt-logo" */).then(c => wrapFunctional(c.default || c))
+export const OtherNumber = import('../../components/OtherNumber.vue' /* webpackChunkName: "components/other-number" */).then(c => wrapFunctional(c.default || c))
+export const PeriodSelect = import('../../components/PeriodSelect.vue' /* webpackChunkName: "components/period-select" */).then(c => wrapFunctional(c.default || c))
+export const TotalMoney = import('../../components/TotalMoney.vue' /* webpackChunkName: "components/total-money" */).then(c => wrapFunctional(c.default || c))
+export const Tutorial = import('../../components/Tutorial.vue' /* webpackChunkName: "components/tutorial" */).then(c => wrapFunctional(c.default || c))
+export const VuetifyLogo = import('../../components/VuetifyLogo.vue' /* webpackChunkName: "components/vuetify-logo" */).then(c => wrapFunctional(c.default || c))
+export const DaysjsJa = import('../../components/daysjs-ja.js' /* webpackChunkName: "components/daysjs-ja" */).then(c => wrapFunctional(c.default || c))
+export const Sparkline = import('../../components/sparkline.vue' /* webpackChunkName: "components/sparkline" */).then(c => wrapFunctional(c.default || c))
+export const TimelyMoney = import('../../components/timelyMoney.vue' /* webpackChunkName: "components/timely-money" */).then(c => wrapFunctional(c.default || c))
+export const Topmessage01 = import('../../components/topmessage01.vue' /* webpackChunkName: "components/topmessage01" */).then(c => wrapFunctional(c.default || c))
+export const Topmessage02 = import('../../components/topmessage02.vue' /* webpackChunkName: "components/topmessage02" */).then(c => wrapFunctional(c.default || c))
+export const Topmessage03 = import('../../components/topmessage03.vue' /* webpackChunkName: "components/topmessage03" */).then(c => wrapFunctional(c.default || c))

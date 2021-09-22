@@ -1,6 +1,3 @@
-
-
-const middleware = {
-}
+const middleware = {}
 
 export default middleware

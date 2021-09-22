@@ -6,16 +6,16 @@ You can directly use them in pages and other components without the need to impo
 
 **Tip:** If a component is conditionally rendered with `v-if` and is big, it is better to use `Lazy` or `lazy-` prefix to lazy load.
 
-- `<Number>` | `<number>` (components/Number.vue)
-- `<NuxtLogo>` | `<nuxt-logo>` (components/NuxtLogo.vue)
-- `<OtherNumber>` | `<other-number>` (components/OtherNumber.vue)
-- `<PeriodSelect>` | `<period-select>` (components/PeriodSelect.vue)
-- `<TotalMoney>` | `<total-money>` (components/TotalMoney.vue)
-- `<Tutorial>` | `<tutorial>` (components/Tutorial.vue)
-- `<VuetifyLogo>` | `<vuetify-logo>` (components/VuetifyLogo.vue)
-- `<DaysjsJa>` | `<daysjs-ja>` (components/daysjs-ja.js)
-- `<Sparkline>` | `<sparkline>` (components/sparkline.vue)
-- `<TimelyMoney>` | `<timely-money>` (components/timelyMoney.vue)
-- `<Topmessage01>` | `<topmessage01>` (components/topmessage01.vue)
-- `<Topmessage02>` | `<topmessage02>` (components/topmessage02.vue)
-- `<Topmessage03>` | `<topmessage03>` (components/topmessage03.vue)
+- `<Number>` | `<number>` (components/Number.vue) [async]
+- `<NuxtLogo>` | `<nuxt-logo>` (components/NuxtLogo.vue) [async]
+- `<OtherNumber>` | `<other-number>` (components/OtherNumber.vue) [async]
+- `<PeriodSelect>` | `<period-select>` (components/PeriodSelect.vue) [async]
+- `<TotalMoney>` | `<total-money>` (components/TotalMoney.vue) [async]
+- `<Tutorial>` | `<tutorial>` (components/Tutorial.vue) [async]
+- `<VuetifyLogo>` | `<vuetify-logo>` (components/VuetifyLogo.vue) [async]
+- `<DaysjsJa>` | `<daysjs-ja>` (components/daysjs-ja.js) [async]
+- `<Sparkline>` | `<sparkline>` (components/sparkline.vue) [async]
+- `<TimelyMoney>` | `<timely-money>` (components/timelyMoney.vue) [async]
+- `<Topmessage01>` | `<topmessage01>` (components/topmessage01.vue) [async]
+- `<Topmessage02>` | `<topmessage02>` (components/topmessage02.vue) [async]
+- `<Topmessage03>` | `<topmessage03>` (components/topmessage03.vue) [async]
