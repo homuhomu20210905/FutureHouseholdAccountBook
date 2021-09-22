@@ -11,8 +11,6 @@
           item-text="name"
           item-value="value"
           label="周期"
-          solo
-          outlined
           @change="setTimeInfo"
         />
       </v-col>
@@ -76,6 +74,13 @@ export default {
       return dummy
     },
   },
+  watch: {
+    periods () {
+      if (this.periods.length > 0) {
+        this.value = this.periods[0].value
+      }
+    }
+  },
   created () {
     if (this.periods.length > 0) {
       this.value = this.periods[0].value
@@ -90,6 +95,6 @@ export default {
       console.log('peirod-select emit...' + this.value)
       this.$emit('period-select', this.value)
     },
-  },
+  }
 }
 </script>

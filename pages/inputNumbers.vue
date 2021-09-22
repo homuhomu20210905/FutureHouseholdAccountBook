@@ -32,14 +32,20 @@
                 <v-col
                   v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
                   :key="item.value + moneyInfo.name + mIndex"
-                  cols="12"
-                  md="6"
+                  lg="3"
+                  cols="6"
+                  md="4"
                 >
                   <number
                     :tab="tab"
                     :name="moneyInfo.name"
                     :money="moneyInfo.money"
-                    @change-value="setNumber(item.value, mIndex, $event)"
+                    :valid-flag="
+                      moneyInfo.validFlag"
+                    @change-value="
+                      setNumber(item.value,
+                                mIndex,
+                                $event)"
                   />
                 </v-col>
               </v-row>
@@ -72,6 +78,8 @@
                   :name="moneyInfo.name"
                   :value="moneyInfo.money"
                   :c-start="+moneyInfo.cycle.start"
+                  :valid-flag="
+                    moneyInfo.validFlag"
                   @change-value="otherNumberSet(item.value, mIndex, $event)"
                 />
               </v-col>
@@ -111,24 +119,16 @@
             >
               <v-row>
                 <v-col
-                  cols="2"
+                  cols="12"
                 >
                   <h2 v-if="totalItem.cycle.value != 9">
                     {{ totalItem.name }}
                   </h2>
                 </v-col>
               </v-row>
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="8"
-                  sm="6"
-                >
-                  <timely-money
-                    :moneys="allSummaryOneDayMoney(totalItem.value)"
-                  />
-                </v-col>
-              </v-row>
+              <timely-money
+                :moneys="allSummaryOneDayMoney(totalItem.value)"
+              />
             </v-col>
           </v-row>
         </div>
@@ -452,12 +452,14 @@ export default {
       this.timeMoneys[value][index].status = $event.status
       this.timeMoneys[value][index].cycle.value = $event.cycle.value
       this.timeMoneys[value][index].cycle.start = $event.cycle.start
+      this.timeMoneys[value][index].validFlag = $event.validFlag
     },
     setNumber (value, index, $event) {
       console.log('number value set...')
       console.log($event)
       this.timeMoneys[value][index].name = $event.name
       this.timeMoneys[value][index].money = $event.value
+      this.timeMoneys[value][index].validFlag = $event.validFlag
     }
   },
 }

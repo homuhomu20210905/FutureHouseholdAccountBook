@@ -5,6 +5,19 @@
   >
     <v-row>
       <v-col
+        cols="12"
+        md="12"
+        xs="12"
+      >
+        <v-switch
+          v-model="info.validFlag"
+          :label="info.validFlag ? '有効':'無効'"
+          color="red"
+          hide-details
+          @change="changePeriod"
+        />
+      </v-col>
+      <v-col
         lg="3"
         md="6"
         sm="12"
@@ -12,8 +25,6 @@
         <v-text-field
           v-model="info.name"
           label="用途"
-          solo
-          outlined
           @change="changePeriod"
         />
       </v-col>
@@ -25,8 +36,6 @@
         <v-text-field
           v-model.number="info.money"
           label="お金"
-          solo
-          outlined
           suffix="円"
           @change="setTimeInfo"
         />
@@ -42,8 +51,6 @@
           item-text="name"
           item-value="day"
           label="周期"
-          solo
-          outlined
           @change="setTimeInfo"
         />
       </v-col>
@@ -89,28 +96,6 @@ import TImes from '../logic/Times'
 import TotalMoney from '../components/TotalMoney.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
 const { CycleStatus, timePattern, TimeLine } = TImes
-// const OtherTime = (name, day, cycle, money, status) => {
-//   return {
-//     name,
-//     day,
-//     cycle,
-//     money,
-//     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
-//     oneDayMoney: function () {
-//       const money = this.pay()
-//       if (this.day == 1) {
-//         return money
-//       }
-//       return money / this.day
-//     },
-//     abs: function () {
-//       return Math.abs(this.oneDayMoney())
-//     },
-//     pay: function () {
-//       return PayStatus.Income == this.status ? this.money * -1 : this.money
-//     },
-//   }
-// }
 export default {
   components: {
     TotalMoney,
@@ -136,12 +121,18 @@ export default {
     cStart: {
       type: Number,
       default: 0
-    }
+    },
+    validFlag: {
+      type: Boolean,
+      default: true
+    },
+
   },
   data () {
     const cycle = Object.assign({}, CycleStatus.Week)
     cycle.start = this.cStart
     const info = Object.assign({}, TimeLine(this.name, Object.assign({}, cycle), this.value, this.status))
+    info.validFlag = this.validFlag
     return {
       info: info,
       timePattern,

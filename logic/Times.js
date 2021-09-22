@@ -48,6 +48,7 @@ const CycleStatus = {
  *  @returns
  */
 const TimeLine = (name, cycle, money, status) => {
+  // 有効フラグ
   const day = cycle.day
   return {
     name,
@@ -66,8 +67,13 @@ const TimeLine = (name, cycle, money, status) => {
       return Math.abs(this.oneDayMoney())
     },
     pay: function () {
+      // 無効の場合は0円を返す
+      if (!this.validFlag) {
+        return 0
+      }
       return PayStatus.Income == this.status ? this.money * -1 : +this.money
     },
+    validFlag: true
   }
 }
 // const timePattern = [1, 7, 30, 180, 365]

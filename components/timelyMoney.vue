@@ -3,14 +3,28 @@
     <v-col
       v-for="(item) in moneyList"
       :key="item.name"
-      cols="6"
-      xs="6"
+      lg="3"
+      sm="6"
+      cols="12"
     >
       <v-card
         class="grey darken-3"
         outlined
       >
-        <h2>{{ item.name }} {{ item.value }}円</h2>
+        <h2>
+          <v-row>
+            <v-col cols="5">
+              {{ item.name }}
+            </v-col>
+            <v-spacer />
+            <v-col
+              cols="7"
+              align="right"
+            >
+              {{ item.value }}円
+            </v-col>
+          </v-row>
+        </h2>
       </v-card>
     </v-col>
   </v-row>

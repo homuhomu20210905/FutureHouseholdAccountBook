@@ -9,8 +9,21 @@
         md="12"
         xs="12"
       >
+        <v-switch
+          v-model="info.validFlag"
+          :label="info.validFlag ? '有効':'無効'"
+          color="red"
+          hide-details
+          @change="setMoney"
+        />
+      </v-col>
+      <v-col
+        cols="12"
+        md="12"
+        xs="12"
+      >
         <v-text-field
-          v-model="useName"
+          v-model="info.name"
           label="用途"
           solo
           outlined
@@ -23,7 +36,7 @@
         xs="12"
       >
         <v-text-field
-          v-model.number="value"
+          v-model.number="info.value"
           label="お金"
           solo
           outlined
@@ -74,22 +87,30 @@ export default {
       type: Number,
       default: 0
     },
+    validFlag: {
+      type: Boolean,
+      default: true
+    },
     tab: {
       type: Number,
       default: 0
     }
   },
   data () {
-    return {
-      useName: this.name,
+    const info = {
+      name: this.name,
       value: this.money,
+      validFlag: this.validFlag
+    }
+    return {
+      info,
       timePattern
     }
   },
   computed: {
     timeCalc () {
       const list = timePattern.map((item) => {
-        return Math.round(this.value * timeCount(this.tab, item.day))
+        return Math.round(this.info.value * timeCount(this.tab, item.day))
       })
 
       return list
@@ -97,7 +118,7 @@ export default {
   },
   methods: {
     setMoney () {
-      const info = { value: +this.value, name: this.useName }
+      const info = this.info
       console.log('setMoney call...')
       console.log(info)
       this.$emit('change-value', info)
