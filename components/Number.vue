@@ -27,7 +27,7 @@
           label="用途"
           solo
           outlined
-          @blur="setMoney"
+          @input="setMoney"
         />
       </v-col>
       <v-col
@@ -41,7 +41,7 @@
           solo
           outlined
           suffix="円"
-          @bulr="setMoney"
+          @input="setMoney"
         />
       </v-col>
     </v-row>

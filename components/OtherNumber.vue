@@ -159,7 +159,7 @@ export default {
     },
     changePeriod ($event) {
       this.info.cycle.start = $event
-      console.log('change period...' + $event)
+      // console.log('change period...' + $event)
       this.setTimeInfo()
     },
   },

@@ -339,7 +339,6 @@ export default {
             const obj = objGet(key, objFixedCost, objIncome)
             result = obj.result
             names = obj.names
-            console.log('-------------------------------------')
           }
           return { result, names }
         }
@@ -444,8 +443,8 @@ export default {
       })
     },
     otherNumberSet (value, index, $event) {
-      console.log('other-select...')
-      console.log($event.cycle.start)
+      // console.log('other-select...')
+      // console.log($event.cycle.start)
       this.timeMoneys[value][index].name = $event.name
       this.timeMoneys[value][index].money = $event.money
       this.timeMoneys[value][index].day = $event.day
@@ -460,6 +459,7 @@ export default {
       this.timeMoneys[value][index].name = $event.name
       this.timeMoneys[value][index].money = $event.value
       this.timeMoneys[value][index].validFlag = $event.validFlag
+      this.$forceUpdate()
     }
   },
 }
