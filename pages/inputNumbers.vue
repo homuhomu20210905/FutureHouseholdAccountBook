@@ -1,162 +1,174 @@
 <template>
   <v-card color="basil">
     <v-card-title class="text-center justify-center py-6">
-      金額を入力してください。
+      <v-row>
+        <v-col cols="auto">
+          <v-btn @click="menuView=!menuView">
+            <v-icon
+              large
+            >
+              mdi-menu
+            </v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="11">
+          金額を入力してください。
+        </v-col>
+      </v-row>
     </v-card-title>
 
-    <v-tabs
-      v-model="tab"
-      background-color="transparent"
-      color="basil"
-      grow
-    >
-      <v-tab
-        v-for="item in tabMenus"
-        :key="item.name"
-      >
-        {{ item.name }}
-      </v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item
-        v-for="item in tabMenus"
-        :key="item.name"
-      >
-        <div
-          v-if="item.value == TabStatus.Work || item.value == TabStatus.Holiday"
+    <v-row>
+      <v-slide-x-transition mode="out-in">
+        <v-col
+          v-if="menuView"
+          cols="2"
         >
-          <v-card flat>
-            <v-card-text>
-              <v-row>
-                <v-col
-                  v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
-                  :key="item.value + moneyInfo.name + mIndex"
-                  lg="3"
-                  cols="6"
-                  md="4"
-                >
-                  <number
-                    :tab="tab"
-                    :name="moneyInfo.name"
-                    :money="moneyInfo.money"
-                    :valid-flag="
-                      moneyInfo.validFlag"
-                    @change-value="
-                      setNumber(item.value,
-                                mIndex,
-                                $event)"
-                  />
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-          <v-card>
-            <v-card-text>
-              <v-row>
-                <v-col>
-                  <h1>{{ item.name }}の合計金額{{ total(item.value) }}円</h1>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </div>
-        <div v-else-if="item.value == TabStatus.Income">
-          <!-- 収入入力ページ -->
-          <v-card-text>
-            <v-row>
-              <v-col
-                v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
-                :key="item.value + moneyInfo.name + mIndex"
-                cols="12"
-                md="12"
-                sm="12"
-              >
-                <other-number
-                  :tab="tab"
-                  :status="1"
-                  :name="moneyInfo.name"
-                  :value="moneyInfo.money"
-                  :c-start="+moneyInfo.cycle.start"
-                  :valid-flag="
-                    moneyInfo.validFlag"
-                  @change-value="otherNumberSet(item.value, mIndex, $event)"
-                />
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </div>
-        <div v-else-if="item.value == TabStatus.FixedCost">
-          <!-- 固定費入力ページ -->
-          <v-card flat>
-            <v-card-text>
-              <v-row>
-                <v-col
-                  v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
-                  :key="moneyInfo.name + mIndex"
-                  cols="12"
-                >
-                  <other-number
-                    :tab="tab"
-                    :status="0"
-                    :name="moneyInfo.name"
-                    :value="moneyInfo.money"
-                    :c-start="+moneyInfo.cycle.start"
-                    @change-value="otherNumberSet(item.value, mIndex, $event)"
-                  />
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-        </div>
-        <div v-else-if="item.value == TabStatus.All">
-          <!-- 集計ページ -->
-          <v-row>
-            <v-col
-              v-for="totalItem in tabMenus"
-              :key="totalItem.name"
-              cols="12"
+          <v-tabs
+            v-model="tab"
+            background-color="transparent"
+            color="basil"
+            grow
+            vertical
+          >
+            <v-tab
+              v-for="item in tabMenus"
+              :key="item.name"
             >
+              {{ item.name }}
+            </v-tab>
+          </v-tabs>
+        </v-col>
+      </v-slide-x-transition>
+      <v-col
+        cols="10"
+      >
+        <v-tabs-items v-model="tab">
+          <v-tab-item
+            v-for="item in tabMenus"
+            :key="item.name"
+          >
+            <div
+              v-if="item.value == TabStatus.Work || item.value == TabStatus.Holiday"
+            >
+              <one-days
+                :periods="timeMoneys[item.value]"
+                :tab="tab"
+                :item="item"
+                @change-value2="
+                  setNumber(item.value,
+                            null,
+                            $event)"
+              />
+              <v-card>
+                <v-card-text>
+                  <v-row>
+                    <v-col>
+                      <h1>{{ item.name }}の合計金額{{ total(item.value) }}円</h1>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </div>
+            <div v-else-if="item.value == TabStatus.Income">
+              <!-- 収入入力ページ -->
+              <v-card-text>
+                <v-row>
+                  <v-col
+                    v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
+                    :key="item.value + moneyInfo.name + mIndex"
+                    cols="12"
+                    md="12"
+                    sm="12"
+                  >
+                    <other-number
+                      :tab="tab"
+                      :status="1"
+                      :name="moneyInfo.name"
+                      :value="moneyInfo.money"
+                      :c-start="+moneyInfo.cycle.start"
+                      :valid-flag="
+                        moneyInfo.validFlag"
+                      @change-value="otherNumberSet(item.value, mIndex, $event)"
+                    />
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </div>
+            <div v-else-if="item.value == TabStatus.FixedCost">
+              <!-- 固定費入力ページ -->
+              <v-card flat>
+                <v-card-text>
+                  <v-row>
+                    <v-col
+                      v-for="(moneyInfo, mIndex) in timeMoneys[item.value]"
+                      :key="moneyInfo.name + mIndex"
+                      cols="12"
+                    >
+                      <other-number
+                        :tab="tab"
+                        :status="0"
+                        :name="moneyInfo.name"
+                        :value="moneyInfo.money"
+                        :c-start="+moneyInfo.cycle.start"
+                        @change-value="otherNumberSet(item.value, mIndex, $event)"
+                      />
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
+            </div>
+            <div v-else-if="item.value == TabStatus.All">
+              <!-- 集計ページ -->
               <v-row>
                 <v-col
+                  v-for="totalItem in tabMenus"
+                  :key="totalItem.name"
                   cols="12"
                 >
-                  <h2 v-if="totalItem.cycle.value != 9">
-                    {{ totalItem.name }}
+                  <v-row>
+                    <v-col
+                      cols="12"
+                    >
+                      <h2 v-if="totalItem.cycle.value != 9">
+                        {{ totalItem.name }}
+                      </h2>
+                    </v-col>
+                  </v-row>
+                  <timely-money
+                    :moneys="allSummaryOneDayMoney(totalItem.value)"
+                  />
+                </v-col>
+              </v-row>
+            </div>
+            <!-- カレンダー画面 -->
+            <div v-if="item.value == TabStatus.Calendar">
+              <v-row>
+                <v-col
+                  v-for="dt in dateList"
+                  :key="dt.view"
+                  cols="4"
+                >
+                  <h2>
+                    {{ dt.view }}{{ dt.money }}{{ dt.names }}
                   </h2>
                 </v-col>
               </v-row>
-              <timely-money
-                :moneys="allSummaryOneDayMoney(totalItem.value)"
-              />
-            </v-col>
-          </v-row>
-        </div>
-        <!-- カレンダー画面 -->
-        <div v-if="item.value == TabStatus.Calendar">
-          <v-row>
-            <v-col
-              v-for="dt in dateList"
-              :key="dt.view"
-              cols="4"
-            >
-              <h2>
-                {{ dt.view }}{{ dt.money }}{{ dt.names }}
-              </h2>
-            </v-col>
-          </v-row>
-        </div>
-      </v-tab-item>
-    </v-tabs-items>
+            </div>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-col>
+    </v-row>
+  </v-card></v-row>    </v-row>
   </v-card>
 </template>
 
 <script>
 import Times from '../logic/Times'
-import Number from '../components/Number.vue'
+// import Number from '../components/Number.vue'
 import OtherNumber from '../components/OtherNumber.vue'
 import TimelyMoney from '../components/timelyMoney.vue'
 import daysjsja from '../components/daysjs-ja'
+import oneDays from '../components/oneDays.vue'
 const { dayjs } = daysjsja
 const {
   createTabMenu,
@@ -169,16 +181,16 @@ const {
 } = Times
 export default {
   components: {
-    Number,
     TimelyMoney,
     OtherNumber,
+    oneDays,
   },
   data () {
     const tabMenus = createTabMenu()
     const timeMoneys = {}
     tabMenus.forEach((item) => {
       timeMoneys[item.value] = []
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 3; i++) {
         timeMoneys[item.value].push(
           Object.assign({}, TimeLine('', Object.assign({}, item.cycle), 0))
         )
@@ -190,6 +202,7 @@ export default {
       tabMenus,
       timeMoneys,
       TabStatus,
+      menuView: true,
     }
   },
   computed: {
@@ -453,9 +466,10 @@ export default {
       this.timeMoneys[value][index].cycle.start = $event.cycle.start
       this.timeMoneys[value][index].validFlag = $event.validFlag
     },
-    setNumber (value, index, $event) {
+    setNumber (value, index_, $event) {
       console.log('number value set...')
       console.log($event)
+      const index = $event.$index
       this.timeMoneys[value][index].name = $event.name
       this.timeMoneys[value][index].money = $event.value
       this.timeMoneys[value][index].validFlag = $event.validFlag
@@ -464,3 +478,19 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.list-complete-item {
+  transition: all 1s;
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-complete-enter, .list-complete-leave-to
+/* .list-complete-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-complete-leave-active {
+  position: absolute;
+}
+</style>
