@@ -27,7 +27,7 @@
           label="用途"
           solo
           outlined
-          @input="setMoney"
+          @change="setMoney"
         />
       </v-col>
       <v-col
@@ -45,38 +45,20 @@
         />
       </v-col>
     </v-row>
-    <v-row>
-      <v-col
-        cols="12"
-        md="12"
-        xs="12"
-      >
-        <v-row>
-          <v-col
-            v-for="(time, index) in timePattern"
-            :key="time.name"
-            cols="12"
-            md="6"
-            xs="6"
-          >
-            <total-money
-              :name="time.name"
-              :money="timeCalc[index]"
-            />
-          </v-col>
-        </v-row>
-      </v-col>
-    </v-row>
+    <total-moneis
+      :time-calc="timeCalc"
+      :time-pattern="timePattern"
+    />
   </v-card>
 </template>
 
 <script>
 import Times from '../logic/Times'
-import totalMoney from './TotalMoney.vue'
+import totalMoneis from './TotalMonies.vue'
 const { timeCount, timePattern } = Times
 export default {
   components: {
-    totalMoney
+    totalMoneis
   },
   props: {
     name: {

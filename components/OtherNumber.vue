@@ -72,7 +72,12 @@
         md="12"
         sm="12"
       >
-        <v-row>
+        <total-moneis
+          :time-calc="timeCalc"
+          :time-pattern="timePattern"
+        />
+
+        <!-- <v-row>
           <v-col
             v-for="(time, index) in timePattern"
             :key="index"
@@ -85,7 +90,7 @@
               :money="timeCalc[index]"
             />
           </v-col>
-        </v-row>
+        </v-row> -->
       </v-col>
     </v-row>
   </v-card>
@@ -93,12 +98,12 @@
 
 <script>
 import TImes from '../logic/Times'
-import TotalMoney from '../components/TotalMoney.vue'
+import totalMoneis from './TotalMonies.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
 const { CycleStatus, timePattern, TimeLine } = TImes
 export default {
   components: {
-    TotalMoney,
+    totalMoneis,
     PeriodSelect,
   },
   props: {

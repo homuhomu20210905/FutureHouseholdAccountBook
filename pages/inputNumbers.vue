@@ -119,7 +119,12 @@
             </div>
             <div v-else-if="item.value == TabStatus.All">
               <!-- 集計ページ -->
-              <v-row>
+              <result-total-money
+                :key="allKey"
+                :tab-menus.sync="tabMenus"
+                :time-moneys.sync="timeMoneys"
+              />
+              <!-- <v-row>
                 <v-col
                   v-for="totalItem in tabMenus"
                   :key="totalItem.name"
@@ -138,7 +143,7 @@
                     :moneys="allSummaryOneDayMoney(totalItem.value)"
                   />
                 </v-col>
-              </v-row>
+              </v-row> -->
             </div>
             <!-- カレンダー画面 -->
             <div v-if="item.value == TabStatus.Calendar">
@@ -158,17 +163,15 @@
         </v-tabs-items>
       </v-col>
     </v-row>
-  </v-card></v-row>    </v-row>
   </v-card>
 </template>
 
 <script>
 import Times from '../logic/Times'
-// import Number from '../components/Number.vue'
 import OtherNumber from '../components/OtherNumber.vue'
-import TimelyMoney from '../components/timelyMoney.vue'
 import daysjsja from '../components/daysjs-ja'
 import oneDays from '../components/oneDays.vue'
+import resultTotalMoney from '../components/resultTotalMoney.vue'
 const { dayjs } = daysjsja
 const {
   createTabMenu,
@@ -181,9 +184,9 @@ const {
 } = Times
 export default {
   components: {
-    TimelyMoney,
     OtherNumber,
     oneDays,
+    resultTotalMoney,
   },
   data () {
     const tabMenus = createTabMenu()
@@ -203,6 +206,7 @@ export default {
       timeMoneys,
       TabStatus,
       menuView: true,
+      allKey: false
     }
   },
   computed: {
@@ -423,6 +427,13 @@ export default {
       }
     },
   },
+  watch: {
+    tab: function (newValue) {
+      // if (this.tabIndex === TabStatus.All) {
+      //   this.allKey = !this.allKey
+      // }
+    }
+  },
   methods: {
     periodCalc (status) {
       /**
@@ -475,7 +486,7 @@ export default {
       this.timeMoneys[value][index].validFlag = $event.validFlag
       this.$forceUpdate()
     }
-  },
+  }
 }
 </script>
 

@@ -1,16 +1,13 @@
 <template>
-  <v-sheet rounded>
-    <v-row>
-      <v-col cols="12">
-        <span>日数：{{ name }}<v-spacer /></span>
-        金額：<span :class="changeColor"> {{ absMoney }}円</span>
-      </v-col>
-    </v-row>
-  </v-sheet>
+  <v-row>
+    <v-col cols="12">
+      <span>日数：{{ name }}<v-spacer /></span>
+      金額：<span :class="changeColor"> {{ absMoney }}円</span>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-// import { times, timeCount, getComma, timePattern } from './Times'
 export default {
   name: 'TotalMoney',
   props: {

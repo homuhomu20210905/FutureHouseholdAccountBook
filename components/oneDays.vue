@@ -5,7 +5,7 @@
         <v-col
           v-for="(moneyInfo, mIndex) in periods"
           :key="item.value + moneyInfo.name + mIndex"
-          lg="3"
+          lg="4"
           cols="6"
           md="4"
         >
@@ -49,17 +49,12 @@ export default {
     }
   },
   data () {
-    console.log(this.periods)
+    // console.log(this.periods)
     return {}
   },
   methods: {
     setNumber (value, index, $event) {
-      console.log('number value set...')
-      // console.log($event)
-      // this.timeMoneys[value][index].name = $event.name
-      // this.timeMoneys[value][index].money = $event.value
-      // this.timeMoneys[value][index].validFlag = $event.validFlag
-      // this.$forceUpdate()
+      // console.log('number value set...')
       $event.$index = index
       this.$emit('change-value2', $event)
     }
