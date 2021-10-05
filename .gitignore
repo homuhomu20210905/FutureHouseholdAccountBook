@@ -6,5 +6,5 @@ node_modules/ # ディレクトリ 'node_modules'を除外
 node_modules
 dist
 .nuxt/*
-
+coverage
 
