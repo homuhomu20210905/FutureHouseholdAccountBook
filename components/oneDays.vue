@@ -32,10 +32,10 @@ import Number from '../components/Number.vue'
 export default {
   components: { Number },
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     periods: {
-      type: Object,
-      require: true,
-      default: () => ({ }) // Objectを生成する関数を指定する
+      type: Array,
+      require: true
     },
     tab: {
       type: Number,

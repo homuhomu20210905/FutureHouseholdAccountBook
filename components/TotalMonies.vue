@@ -11,6 +11,7 @@
         <total-money
           :name="time.name"
           :money="timeCalc[index]"
+          class="total-money"
         />
       </v-card>
     </v-col>
@@ -18,19 +19,20 @@
 </template>
 
 <script>
-import totalMoney from './TotalMoney.vue'
+import TotalMoney from './TotalMoney.vue'
 export default {
-  components: [totalMoney],
+  name: 'TotalMonies',
+  components: { TotalMoney },
   props: {
+    // eslint-disable-next-line vue/require-default-prop
     timePattern: {
-      type: Object,
+      type: Array,
       require: true,
-      default: () => ({ }) // Objectを生成する関数を指定する
     },
+    // eslint-disable-next-line vue/require-default-prop
     timeCalc: {
-      type: Object,
-      require: true,
-      default: () => ({ }) // Objectを生成する関数を指定する
+      type: Array,
+      require: true
     }
   }
 }

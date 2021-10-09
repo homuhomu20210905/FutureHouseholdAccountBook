@@ -98,12 +98,12 @@
 
 <script>
 import TImes from '../logic/Times'
-import totalMoneis from './TotalMonies.vue'
+import TotalMoneis from './TotalMonies.vue'
 import PeriodSelect from '../components/PeriodSelect.vue'
 const { CycleStatus, timePattern, TimeLine } = TImes
 export default {
   components: {
-    totalMoneis,
+    TotalMoneis,
     PeriodSelect,
   },
   props: {

@@ -54,11 +54,11 @@
 
 <script>
 import Times from '../logic/Times'
-import totalMoneis from './TotalMonies.vue'
+import TotalMoneis from './TotalMonies.vue'
 const { timeCount, timePattern } = Times
 export default {
   components: {
-    totalMoneis
+    TotalMoneis
   },
   props: {
     name: {

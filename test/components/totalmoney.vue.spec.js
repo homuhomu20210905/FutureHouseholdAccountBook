@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import totalMoney from '../components/TotalMoney.vue'
+import totalMoney from '@/components/TotalMoney.vue'
 
 describe('totalMoney', () => {
   test('props check', async () => {
