@@ -44,6 +44,18 @@
           @input="setMoney"
         />
       </v-col>
+      <v-col
+        cols="12"
+        md="12"
+        xs="12"
+      >
+        <icon-select
+          @select="info.iconSelect = $event.index"
+        />
+      </v-col>
+      <v-col>
+        {{ info.iconSelect }}
+      </v-col>
     </v-row>
     <total-moneis
       :time-calc="timeCalc"
@@ -55,10 +67,12 @@
 <script>
 import Times from '../logic/Times'
 import TotalMoneis from './TotalMonies.vue'
+import iconSelect from './iconSelect.vue'
 const { timeCount, timePattern } = Times
 export default {
   components: {
-    TotalMoneis
+    TotalMoneis,
+    iconSelect
   },
   props: {
     name: {
@@ -82,7 +96,8 @@ export default {
     const info = {
       name: this.name,
       value: this.money,
-      validFlag: this.validFlag
+      validFlag: this.validFlag,
+      iconSelect: 0
     }
     return {
       info,

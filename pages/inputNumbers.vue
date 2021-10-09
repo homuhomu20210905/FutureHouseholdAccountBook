@@ -476,6 +476,7 @@ export default {
       this.timeMoneys[value][index].cycle.value = $event.cycle.value
       this.timeMoneys[value][index].cycle.start = $event.cycle.start
       this.timeMoneys[value][index].validFlag = $event.validFlag
+      this.timeMoneys[value][index].iconSelect = $event.iconSelect
     },
     setNumber (value, index_, $event) {
       console.log('number value set...')
@@ -484,6 +485,7 @@ export default {
       this.timeMoneys[value][index].name = $event.name
       this.timeMoneys[value][index].money = $event.value
       this.timeMoneys[value][index].validFlag = $event.validFlag
+      this.timeMoneys[value][index].iconSelect = $event.iconSelect
       this.$forceUpdate()
     }
   }

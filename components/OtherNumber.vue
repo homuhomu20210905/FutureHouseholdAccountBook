@@ -5,9 +5,9 @@
   >
     <v-row>
       <v-col
-        cols="12"
-        md="12"
-        xs="12"
+        cols="2"
+        md="2"
+        xs="2"
       >
         <v-switch
           v-model="info.validFlag"
@@ -15,6 +15,15 @@
           color="red"
           hide-details
           @change="changePeriod"
+        />
+      </v-col>
+      <v-col
+        cols="10"
+        md="10"
+        xs="10"
+      >
+        <icon-select
+          @select="info.iconSelect = $event.index"
         />
       </v-col>
       <v-col
@@ -76,21 +85,6 @@
           :time-calc="timeCalc"
           :time-pattern="timePattern"
         />
-
-        <!-- <v-row>
-          <v-col
-            v-for="(time, index) in timePattern"
-            :key="index"
-            cols="12"
-            md="6"
-            sm="6"
-          >
-            <total-money
-              :name="time.name"
-              :money="timeCalc[index]"
-            />
-          </v-col>
-        </v-row> -->
       </v-col>
     </v-row>
   </v-card>
