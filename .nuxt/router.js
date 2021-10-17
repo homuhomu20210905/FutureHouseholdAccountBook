@@ -4,12 +4,12 @@ import { normalizeURL, decode } from 'ufo'
 import { interopDefault } from './utils'
 import scrollBehavior from './router.scrollBehavior.js'
 
-const _b3378bfc = () => interopDefault(import('../pages/chart.vue' /* webpackChunkName: "pages/chart" */))
-const _263aafa0 = () => interopDefault(import('../pages/chart2.vue' /* webpackChunkName: "pages/chart2" */))
-const _512114a8 = () => interopDefault(import('../pages/inputNumbers.vue' /* webpackChunkName: "pages/inputNumbers" */))
-const _c114f804 = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
-const _1c671b30 = () => interopDefault(import('../pages/redirect.vue' /* webpackChunkName: "pages/redirect" */))
-const _1801f0f6 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
+const _4072e1a4 = () => interopDefault(import('../pages/chart.vue' /* webpackChunkName: "pages/chart" */))
+const _1922fff4 = () => interopDefault(import('../pages/chart2.vue' /* webpackChunkName: "pages/chart2" */))
+const _4a673700 = () => interopDefault(import('../pages/inputNumbers.vue' /* webpackChunkName: "pages/inputNumbers" */))
+const _09973e2a = () => interopDefault(import('../pages/inspire.vue' /* webpackChunkName: "pages/inspire" */))
+const _683c0488 = () => interopDefault(import('../pages/redirect.vue' /* webpackChunkName: "pages/redirect" */))
+const _51644622 = () => interopDefault(import('../pages/index.vue' /* webpackChunkName: "pages/index" */))
 
 const emptyFn = () => {}
 
@@ -24,27 +24,27 @@ export const routerOptions = {
 
   routes: [{
     path: "/chart",
-    component: _b3378bfc,
+    component: _4072e1a4,
     name: "chart"
   }, {
     path: "/chart2",
-    component: _263aafa0,
+    component: _1922fff4,
     name: "chart2"
   }, {
     path: "/inputNumbers",
-    component: _512114a8,
+    component: _4a673700,
     name: "inputNumbers"
   }, {
     path: "/inspire",
-    component: _c114f804,
+    component: _09973e2a,
     name: "inspire"
   }, {
     path: "/redirect",
-    component: _1c671b30,
+    component: _683c0488,
     name: "redirect"
   }, {
     path: "/",
-    component: _1801f0f6,
+    component: _51644622,
     name: "index"
   }],
 

@@ -2,37 +2,43 @@
   {
     "name": "chart",
     "path": "/chart",
-    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/chart.vue",
-    "chunkName": "pages/chart"
+    "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/chart.vue",
+    "chunkName": "pages/chart",
+    "_name": "_4072e1a4"
   },
   {
     "name": "chart2",
     "path": "/chart2",
-    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/chart2.vue",
-    "chunkName": "pages/chart2"
+    "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/chart2.vue",
+    "chunkName": "pages/chart2",
+    "_name": "_1922fff4"
   },
   {
     "name": "inputNumbers",
     "path": "/inputNumbers",
-    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/inputNumbers.vue",
-    "chunkName": "pages/inputNumbers"
+    "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/inputNumbers.vue",
+    "chunkName": "pages/inputNumbers",
+    "_name": "_4a673700"
   },
   {
     "name": "inspire",
     "path": "/inspire",
-    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/inspire.vue",
-    "chunkName": "pages/inspire"
+    "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/inspire.vue",
+    "chunkName": "pages/inspire",
+    "_name": "_09973e2a"
   },
   {
     "name": "redirect",
     "path": "/redirect",
-    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/redirect.vue",
-    "chunkName": "pages/redirect"
+    "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/redirect.vue",
+    "chunkName": "pages/redirect",
+    "_name": "_683c0488"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/home/gyudouhu3208/projects/sample1/github/FutureHouseholdAccountBook/pages/index.vue",
-    "chunkName": "pages/index"
+    "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_51644622"
   }
 ]
