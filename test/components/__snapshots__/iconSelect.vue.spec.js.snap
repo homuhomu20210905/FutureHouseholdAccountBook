@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mount props check 1`] = `
+<div>
+  <v-chip-group-stub
+    activeclass="v-slide-item--active"
+    column="true"
+    mobilebreakpoint="1264"
+    nexticon="$next"
+    previcon="$prev"
+    tag="div"
+  >
+    <v-chip-stub
+      active="true"
+      activeclass="light-blue darken-3"
+      closeicon="$delete"
+      closelabel="$vuetify.close"
+      filtericon="$complete"
+      tag="span"
+    >
+      
+      浪費
+    
+    </v-chip-stub>
+    <v-chip-stub
+      active="true"
+      activeclass="light-blue darken-3"
+      closeicon="$delete"
+      closelabel="$vuetify.close"
+      filtericon="$complete"
+      tag="span"
+    >
+      
+      消費
+    
+    </v-chip-stub>
+    <v-chip-stub
+      active="true"
+      activeclass="light-blue darken-3"
+      closeicon="$delete"
+      closelabel="$vuetify.close"
+      filtericon="$complete"
+      tag="span"
+    >
+      
+      投資
+    
+    </v-chip-stub>
+  </v-chip-group-stub>
+</div>
+`;
