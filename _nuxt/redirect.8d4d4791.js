@@ -1,0 +1,1 @@
+import{n as t}from"./client.286e53c2.js";const e={};var r=t({layout:"blank",fetch({base:t,redirect:e,query:r}){const n=r.p;if(void 0===n)return e("/");return e("/"+n.replace(t,""))}},(function(){var t=this.$createElement;return(this._self._c||t)("div")}),[],!1,n,null,null,null);function n(t){for(let r in e)this[r]=e[r]}var l=function(){return r.exports}();export{l as default};
