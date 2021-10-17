@@ -11,8 +11,13 @@
     "lint:style": "./node_modules/stylelint/bin/stylelint.js \"**/*.{vue,css}\" --ignore-path .gitignore",
     "prepare": "./node_modules/husky/lib/husky.sh install",
     "lint": "npm run lint:js && npm run lint:style",
+<<<<<<< HEAD
     "lintfix": "./node_modules/eslint/bin/eslint.js --ext .js,.vue --ignore-path .gitignore . --fix",
     "test": "./node_modules/jest/bin/jest.js"
+=======
+    "test": "jest --coverage",
+    "deploy": "push-dir --dir=dist --branch=gh-pages --cleanup"
+>>>>>>> 522be8cf1a00799c1f3b33a27ec50074f63aa6d6
   },
   "lint-staged": {
     "*.{js,vue}": "eslint",
@@ -42,6 +47,7 @@
     "eslint-config-standard": "^16.0.3",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.5.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-prettier": "^3.4.0",

@@ -27,7 +27,7 @@
           label="用途"
           solo
           outlined
-          @blur="setMoney"
+          @change="setMoney"
         />
       </v-col>
       <v-col
@@ -41,42 +41,38 @@
           solo
           outlined
           suffix="円"
-          @bulr="setMoney"
+          @input="setMoney"
         />
       </v-col>
-    </v-row>
-    <v-row>
       <v-col
         cols="12"
         md="12"
         xs="12"
       >
-        <v-row>
-          <v-col
-            v-for="(time, index) in timePattern"
-            :key="time.name"
-            cols="12"
-            md="6"
-            xs="6"
-          >
-            <total-money
-              :name="time.name"
-              :money="timeCalc[index]"
-            />
-          </v-col>
-        </v-row>
+        <icon-select
+          @select="info.iconSelect = $event.index"
+        />
+      </v-col>
+      <v-col>
+        {{ info.iconSelect }}
       </v-col>
     </v-row>
+    <total-moneis
+      :time-calc="timeCalc"
+      :time-pattern="timePattern"
+    />
   </v-card>
 </template>
 
 <script>
 import Times from '../logic/Times'
-import totalMoney from './TotalMoney.vue'
+import TotalMoneis from './TotalMonies.vue'
+import iconSelect from './iconSelect.vue'
 const { timeCount, timePattern } = Times
 export default {
   components: {
-    totalMoney
+    TotalMoneis,
+    iconSelect
   },
   props: {
     name: {
@@ -100,7 +96,8 @@ export default {
     const info = {
       name: this.name,
       value: this.money,
-      validFlag: this.validFlag
+      validFlag: this.validFlag,
+      iconSelect: 0
     }
     return {
       info,

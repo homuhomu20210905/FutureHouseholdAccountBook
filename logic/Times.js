@@ -55,6 +55,7 @@ const TimeLine = (name, cycle, money, status) => {
     day,
     cycle,
     money,
+    iconSelect: 0,
     status: status != PayStatus.Income ? PayStatus.Spending : PayStatus.Income,
     oneDayMoney: function () {
       const money = this.pay()
