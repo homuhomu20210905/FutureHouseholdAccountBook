@@ -3,42 +3,36 @@
     "name": "chart",
     "path": "/chart",
     "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/chart.vue",
-    "chunkName": "pages/chart",
-    "_name": "_4072e1a4"
+    "chunkName": "pages/chart"
   },
   {
     "name": "chart2",
     "path": "/chart2",
     "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/chart2.vue",
-    "chunkName": "pages/chart2",
-    "_name": "_1922fff4"
+    "chunkName": "pages/chart2"
   },
   {
     "name": "inputNumbers",
     "path": "/inputNumbers",
     "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/inputNumbers.vue",
-    "chunkName": "pages/inputNumbers",
-    "_name": "_4a673700"
+    "chunkName": "pages/inputNumbers"
   },
   {
     "name": "inspire",
     "path": "/inspire",
     "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/inspire.vue",
-    "chunkName": "pages/inspire",
-    "_name": "_09973e2a"
+    "chunkName": "pages/inspire"
   },
   {
     "name": "redirect",
     "path": "/redirect",
     "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/redirect.vue",
-    "chunkName": "pages/redirect",
-    "_name": "_683c0488"
+    "chunkName": "pages/redirect"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/mnt/chromeos/removable/SSD-PSMU3/projects/node/FutureHouseholdAccountBook/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_51644622"
+    "chunkName": "pages/index"
   }
 ]
