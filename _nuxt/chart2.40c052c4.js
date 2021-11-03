@@ -1,1 +1,0 @@
-import t from"./chart.8c00d2eb.js";import{n}from"./client.47382441.js";const r={};var e=n({components:{Chart:t}},(function(){var t=this,n=t.$createElement,r=t._self._c||n;return r("div",[r("h1",[t._v("棒グラフと線グラフ")]),r("chart")],1)}),[],!1,o,null,null,null);function o(t){for(let n in r)this[n]=r[n]}var c=function(){return e.exports}();export{c as default};

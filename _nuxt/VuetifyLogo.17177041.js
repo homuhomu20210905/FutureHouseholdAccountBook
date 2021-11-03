@@ -1,1 +1,0 @@
-import{n as t}from"./client.47382441.js";const n={};var e=t({},(function(){var t=this.$createElement;return(this._self._c||t)("img",{staticClass:"VuetifyLogo",attrs:{alt:"Vuetify Logo",src:"/vuetify-logo.svg"}})}),[],!1,o,null,null,null);function o(t){for(let e in n)this[e]=n[e]}var r=function(){return e.exports}();export{r as default};
