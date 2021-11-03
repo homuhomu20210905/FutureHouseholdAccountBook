@@ -9,7 +9,7 @@
     "generate": "./node_modules/nuxt/bin/nuxt.js generate",
     "lint:js": "./node_modules/eslint/bin/eslint.js --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:style": "./node_modules/stylelint/bin/stylelint.js \"**/*.{vue,css}\" --ignore-path .gitignore",
-    "prepare": "bash ./node_modules/husky/lib/husky.sh install",
+    "prepare": "sh ./node_modules/husky/lib/husky.sh install",
     "lint": "npm run lint:js && npm run lint:style",
     "lintfix": "./node_modules/eslint/bin/eslint.js --ext .js,.vue --ignore-path .gitignore . --fix",
     "test": "./node_modules/jest/bin/jest.js --coverage",

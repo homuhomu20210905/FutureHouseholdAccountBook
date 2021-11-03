@@ -57,7 +57,7 @@ export default {
     'nuxt-vite'
   ],
   vite: {
-    build: true
+    build: false
   },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [],
