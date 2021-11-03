@@ -26,7 +26,7 @@ export default {
     titleTemplate: '%s - sample',
     title: 'sample',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'jp',
     },
     meta: [
       { charset: 'utf-8' },
