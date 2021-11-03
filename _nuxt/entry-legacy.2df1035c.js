@@ -1,2 +1,0 @@
-var imports = ["/FutureHouseholdAccountBook/_nuxt/client-legacy.09901f2e.js","/FutureHouseholdAccountBook/_nuxt/Times-legacy.082e0519.js"]
-imports.reduce((p, id) => p.then(() => System.import(id)), Promise.resolve())
